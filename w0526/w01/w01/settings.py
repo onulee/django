@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'students', #students앱 등록
+    'home', #students앱 등록
 ]
 
 MIDDLEWARE = [
