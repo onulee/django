@@ -27,7 +27,7 @@
         {% for s in list %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{s.name}}</td>
+            <td><a href='/students/view/?name={{s.name}}'>{{s.name}}</a></td>
             <td>{{s.major}}</td>
         </tr>
         {% endfor %}
