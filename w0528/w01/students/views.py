@@ -2,6 +2,15 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from students.models import Student  #Student테이블
 
+# 학생정보 삭제
+def delete(request,name):
+    print("삭제 이름 : ",name)
+    qs = Student.objects.get(name=name) # 해당되는 학생정보검색
+    qs.delete() # 삭제
+    
+    return redirect('/students/list')
+
+
 # 학생정보 수정
 def update(request,name):
     if request.method == 'GET':

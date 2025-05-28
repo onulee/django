@@ -41,7 +41,14 @@
     <div>
         <a href='/students/list/'><button>학생리스트</button></a>
         <a href='/students/update/{{stu.name}}/'><button>수정</button></a>
-        <a href='/students/delete/'><button>삭제</button></a>
+        <button onclick='deleteBtn()'>삭제</button>
     </div>
+    <script>
+        function deleteBtn(){
+            if(confirm('정말삭제하시겠습니까?')){
+                location.href='/students/delete/{{stu.name}}/';
+            }
+        }
+    </script>
 </body>
 </html>
