@@ -4,5 +4,5 @@ from . import views
 app_name='students'
 urlpatterns = [
     path('list/', views.list, name='list'), #list.html 페이지 연결
-    path('write/', views.write, name='write'), #write.html 페이지 연결
+    path('write/', views.write, name='write'), #write.html - GET,POST
 ]
