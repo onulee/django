@@ -14,6 +14,9 @@
     </style>
 </head>
 <body>
+    {# 디장고주석 : 디장고html형태 : {% 문법:for,if %}, {{ 변수 }}, {{ 변수|옵션 }} #}
+    <!-- html주석은 디장고에서 내부명령어를 실행시켜줌  -->
+    {# {{list}}<br> {{count}}<br> {{id}}<br> #}
     <h2>학생정보리스트</h2>
     <table>
         <tr>
@@ -21,11 +24,13 @@
             <th>이름</th>
             <th>학과</th>
         </tr>
+        {% for s in list %}
         <tr>
-            <td>1</td>
-            <td>홍길동</td>
-            <td>컴퓨터공학과</td>
+            <td>{{forloop.counter}}</td>
+            <td>{{s.name}}</td>
+            <td>{{s.major}}</td>
         </tr>
+        {% endfor %}
     </table>
     <br>
     <div>
