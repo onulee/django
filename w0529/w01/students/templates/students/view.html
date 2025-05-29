@@ -62,7 +62,7 @@
         <button onclick='deleteBtn()'>삭제</button>
     </div>  
     <script>
-        function delete(){
+        function deleteBtn(){
             if(confirm('{{stu.name}} 학생을 삭제하시겠습니까?')){
                 location.href='/students/delete/{{stu.no}}/';
             }

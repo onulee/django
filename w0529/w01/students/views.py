@@ -4,7 +4,7 @@ from students.models import Student    # Student 테이블 연결
 # 학생정보삭제
 def delete(request,no):
     Student.objects.get(no=no).delete()
-    # return redirect('/students/list/')
+    # return redirect('/students/list/') # url -> name
     return redirect('students:list')   # app_name, path name
 
 
