@@ -1,6 +1,12 @@
 from django.shortcuts import render,redirect
 from students.models import Student    # Student 테이블 연결
 
+# 학생정보 상세보기
+def view(request,no):
+    Student.objects.get(no=no)
+    print('전달 no :',no)
+    return render(request,'students/view.html')
+
 # 학생정보저장
 def writeOk(request):
     # 학생정보저장

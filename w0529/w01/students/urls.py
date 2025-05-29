@@ -8,4 +8,6 @@ urlpatterns = [
     path('list/', views.list, name='list'),
     path('write/', views.write, name='write'),
     path('writeOk/', views.writeOk, name='writeOk'),
+    # html -> server 1.파라미터 2.api방식 3.js   <str:name>
+    path('view/<int:no>/', views.view, name='view'),
 ]
