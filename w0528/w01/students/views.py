@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from students.models import Student  #Student테이블
+from django.urls import reverse
 
 # 학생정보 삭제
 def delete(request,name):
@@ -37,12 +38,13 @@ def update(request,name):
         # 3. 저장
         qs.save() 
         print("Student 객체 수정")
-        return redirect('/students/list/') 
+        return redirect(reverse('students:view' ,args=(name2,))) 
+        # return redirect(f'/students/view/{name2}/') 
 
 
 # 학생정보 상세보기
-def view(request):
-    name = request.GET.get('name')
+def view(request,name):
+    # name = request.GET.get('name')
     print("전달 이름 : ",name)
     qs = Student.objects.get(name=name)
     context = {'stu':qs}
