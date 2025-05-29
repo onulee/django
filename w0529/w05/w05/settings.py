@@ -1,5 +1,4 @@
 from pathlib import Path
-# 1.import
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -10,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-s1gtdv=(06atpbv39cx&jn%j(4kn_3-u2nat2qqx+wrj#+e7v%'
+SECRET_KEY = 'django-insecure-gb$+e_e^y$p96mlvd8=%c@$bl=(esp0d1r8t%h+@=-qm_&q*u9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -20,7 +19,6 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-# 2. 앱등록
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,7 +28,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'member',
-    'board',
 ]
 
 MIDDLEWARE = [
@@ -43,7 +40,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'w04.urls'
+ROOT_URLCONF = 'w05.urls'
 
 TEMPLATES = [
     {
@@ -60,7 +57,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'w04.wsgi.application'
+WSGI_APPLICATION = 'w05.wsgi.application'
 
 
 # Database
@@ -96,7 +93,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-# 3. 한글/한국시간등록 
 LANGUAGE_CODE = 'ko-kr'
 TIME_ZONE = 'Asia/Seoul'
 
@@ -108,14 +104,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-# 4. static 등록
 STATIC_URL = 'static/'
 # static파일 위치 설정 - 현재root 모든 static폴더를 가져옴
 # 정적파일 : css,js,image
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
 )
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
