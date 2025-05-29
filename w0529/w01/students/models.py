@@ -9,6 +9,7 @@ class Student(models.Model):
     grade = models.IntegerField(default=0)  # number
     age = models.IntegerField(default=0)
     gender = models.CharField(max_length=30,blank=True)  # 추가-100개
+    hobby = models.CharField(max_length=100,blank=True)  
     sdate = models.DateTimeField(auto_now=True) # date - sysdate
     memo = models.TextField(blank=True)     # clob
     

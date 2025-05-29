@@ -3,9 +3,13 @@ from students.models import Student    # Student 테이블 연결
 
 # 학생정보 상세보기
 def view(request,no):
-    Student.objects.get(no=no)
+    try:
+        qs = Student.objects.get(no=no)
+    except:
+        qs = None    
     print('전달 no :',no)
-    return render(request,'students/view.html')
+    context = {'stu':qs}
+    return render(request,'students/view.html',context)
 
 # 학생정보저장
 def writeOk(request):
@@ -15,11 +19,16 @@ def writeOk(request):
     grade = request.POST.get('grade')
     age = request.POST.get('age')
     gender = request.POST.get('gender')
+    # 취미 - 리스트
+    hobby = request.POST.getlist('hobby')
+    # 리스트타입 -> str타입으로 변경
+    hobby = ','.join(hobby)  # 'game,golf,swim'
         
     print("저장정보 이름 : ",name)
     print("저장정보 학과 : ",major)
+    print("저장정보 hobby : ",hobby)  # ['game','golf','swim']
     
-    Student(name=name,major=major,grade=grade,age=age,gender=gender,memo='등록합니다.').save()
+    Student(name=name,major=major,grade=grade,age=age,gender=gender,hobby=hobby,memo='등록합니다.').save()
     
     return redirect('/students/list/')
 
