@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-w7!t0mz1$o7jmlq_*z3o1#mm#yz5khck$*6ml6)dsihu+)8#pf'
+SECRET_KEY = 'django-insecure-b$l&1ecye()(jhh+6nv=a^e(^&f!uk#9b6*n#*ltq_ed&szlz4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
-    'students',
+    'member',
 ]
 
 MIDDLEWARE = [
@@ -40,7 +40,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'w01.urls'
+ROOT_URLCONF = 'w03.urls'
 
 TEMPLATES = [
     {
@@ -57,7 +57,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'w01.wsgi.application'
+WSGI_APPLICATION = 'w03.wsgi.application'
 
 
 # Database
@@ -105,11 +105,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+# url에서 static/ 이라고 들어오면 아래로 연결
 STATIC_URL = 'static/'
 
+# static파일 위치 설정 - 현재root 모든 static폴더를 가져옴
+# 정적파일 : css,js,image
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
 )
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
