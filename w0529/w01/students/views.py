@@ -1,6 +1,17 @@
 from django.shortcuts import render,redirect
 from students.models import Student    # Student 테이블 연결
 
+# 학생정보수정페이지 열기
+def update(request,no):
+    qs = Student.objects.get(no=no)     # set타입 1개
+    context = {'stu':qs}
+    # qs = Student.objects.filter(no=no)  # 데이터 타입 - 리스트타입
+    # context = {'stu':qs[0]}
+    return render(request,'students/update.html',context)
+
+def updateOk(request):
+    return redirect('/students/list/')
+
 # 학생정보 상세보기
 def view(request,no):
     try:
