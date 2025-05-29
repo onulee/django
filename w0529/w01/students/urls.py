@@ -6,4 +6,6 @@ app_name = 'students'
 urlpatterns = [
     # path / 붙임.
     path('list/', views.list, name='list'),
+    path('write/', views.write, name='write'),
+    path('writeOk/', views.writeOk, name='writeOk'),
 ]
