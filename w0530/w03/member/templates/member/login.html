@@ -70,7 +70,7 @@
     <form action="/member/login/" name="login" method="post">
       {% csrf_token %}
       <div class="id">
-        <input type="text" name="id" size="30" placeholder="CJ ONE 통합아이디 6~20자">
+        <input type="text" name="id" value='{{cook_id}}' size="30" placeholder="CJ ONE 통합아이디 6~20자">
       </div>
       <div class="pw">
         <input type="text" name="pw" size="45" placeholder="비밀번호 영문, 특수문자, 숫자혼합 8~12자">
@@ -78,7 +78,7 @@
 
       <div id="save">
         <div class="save"></div>
-        <span>아이디 저장</span><input type='checkbox' name='cookie_val' value='cookie_val'>
+        <span>아이디 저장</span><input type='checkbox' name='cookie_val' value='idsave' {% if cook_id %}checked {%endif%} >
       </div>
   
       <div id="find">
