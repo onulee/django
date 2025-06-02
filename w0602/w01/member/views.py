@@ -1,5 +1,18 @@
 from django.shortcuts import render,redirect
 
+### 회원가입 02 - 회원가입페이지, 회원가입저장
+def join02(request):
+    if request.method == 'GET': # 회원가입페이지
+        return render(request,'member/join02.html')
+    
+    elif request.method == 'POST': #회원가입저장
+        return render(request,'member/join02.html')
+
+
+### 회원가입 01 - 동의페이지
+def join01(request):
+    return render(request,'member/join01.html')
+
 ### login페이지연결, login확인
 def login(request):
     if request.method == 'GET':
@@ -14,14 +27,11 @@ def login(request):
         id = request.POST.get('id') #아이디
         pw = request.POST.get('pw') #패스워드
         idCheck = request.POST.get('idCheck') # 있을수도 있고, 없을수도 있고
-        print("아이디,패스워드 : ",id,pw)
-        if idCheck != None:
-            print('idCheck가 체크 되었습니다.')
-            # 쿠키에 id를 저장해서 돌려줌.
-            
+        # response 쿠키 저장
+        response = redirect('/')
+        if idCheck != None: # idCheck값이 있으면 - max_age = 60초*60분*24시간*365일
+            response.set_cookie('idCheck',id,max_age=60*60) #쿠키저장
         else:
-            print('idCheck가 체크되지 않았습니다.')    
-        
-        return render(request,'member/login.html')
-        # return redirect('/')
+            response.delete_cookie('idCheck') #쿠키삭제
+        return response
         

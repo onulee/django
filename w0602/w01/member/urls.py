@@ -4,4 +4,6 @@ from . import views
 app_name='member'
 urlpatterns = [
     path('login/', views.login, name='login' ), 
+    path('join01/', views.join01, name='join01' ),  # 동의페이지
+    path('join02/', views.join02, name='join02' ),  # 회원가입페이지
 ]

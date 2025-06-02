@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="css/style_header.css">
-		<link rel="stylesheet" type="text/css" href="css/style_join02_info_input.css">
-		<link rel="stylesheet" type="text/css" href="css/style_footer.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/style_header.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/style_join02_info_input.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/style_footer.css">
 		<title>회원가입 - 회원정보입력</title>
 	</head>
 	<body>
@@ -19,7 +20,7 @@
 				</ul>
 			</div>	
 			<nav>
-				<a href="#"></a>
+				<a href="/"></a>
 				<ul>
 					<li><a href="#">COOKIT소개</a></li>
 					<li><a href="#">COOKIT메뉴</a></li>
@@ -79,15 +80,6 @@
 					<span>(* 항목은 필수 항목입니다.)</span>
 				</h4>
 				<fieldset class="fieldset_class">
-					<dl id="join_name_dl">
-						<dt>
-							<div></div>
-							<label for="name">이름</label>
-						</dt>
-						<dd>
-							<input type="text" id="name" name="name" required/>
-						</dd>
-					</dl>
 					<dl id="join_id_dl">
 						<dt>
 							<div></div>
@@ -119,6 +111,116 @@
 						<dd>
 							<input type="password" id="pw2" name="pw2" minlength="8" required />
 							<span>비밀번호를 다시 한번 입력해 주세요.</span>
+						</dd>
+					</dl>
+					<dl id="join_name_dl">
+						<dt>
+							<div></div>
+							<label for="name">이름</label>
+						</dt>
+						<dd>
+							<input type="text" id="name" name="name" required/>
+						</dd>
+					</dl>
+					<dl id="join_name_dl">
+						<dt>
+							<div></div>
+							<label for="nickName">닉네임</label>
+						</dt>
+						<dd>
+							<input type="text" id="nickName" name="nickName" required/>
+						</dd>
+					</dl>
+					<dl id="join_tell_dl">
+						<dt>
+							<div></div>
+							<label for="f_tell">휴대전화</label>
+						</dt>
+						<dd>
+							<input type="text" id="f_tell" name="f_tell" maxlength="3" required />
+							<span> - </span>
+							<input type="text" id="m_tell" name="m_tell" maxlength="4" required />
+							<span> - </span>
+							<input type="text" id="l_tell" name="l_tell" maxlength="4" required />
+						</dd>
+					</dl>
+					<dl id="join_gender_dl">
+						<dt>
+							<div></div>
+							<label for="">성별</label>
+						</dt>
+						<dd>
+							<div>
+								<input type="radio" name="gender" id="male" value="male" checked="checked"/>
+								<label for="male">남성</label>
+								<input type="radio" name="gender" id="female" value="female" />
+								<label for="female">여성</label>
+							</div>
+						</dd>
+					</dl>
+					<dl id="join_interests_dl">
+						<dt>
+							<label for="">관심사</label>
+						</dt>
+						<dd>
+							<ul>
+								<li>
+									<input type="checkbox" name="computer" id="computer" value="computer" />
+									<label for="computer">컴퓨터/인터넷</label>
+								</li>
+								<li>
+									<input type="checkbox" name="movie" id="movie" value="movie" />
+									<label for="movie">영화/비디오</label>
+								</li>
+								<li>
+									<input type="checkbox" name="music" id="music" value="music" />
+									<label for="music">음악</label>
+								</li>
+								<li>
+									<input type="checkbox" name="shopping" id="shopping" value="shopping" />
+									<label for="shopping">쇼핑</label>
+								</li>
+								<li>
+									<input type="checkbox" name="game" id="game" value="game" />
+									<label for="game">게임</label>
+								</li>
+								<li>
+									<input type="checkbox" name="culture" id="culture" value="culture" />
+									<label for="culture">문화/예술</label>
+								</li>
+								<li>
+									<input type="checkbox" name="parenting" id="parenting" value="parenting" />
+									<label for="parenting">육아/아동</label>
+								</li>
+								<li>
+									<input type="checkbox" name="cooking" id="cooking" value="cooking" />
+									<label for="parenting">요리</label>
+								</li>
+								<li>
+									<input type="checkbox" name="interier" id="interier" value="interier" />
+									<label for="interier">인테리어</label>
+								</li>
+								<li>
+									<input type="checkbox" name="leisure" id="leisure" value="leisure" />
+									<label for="leisure">레저/여가</label>
+								</li>
+								<li>
+									<input type="checkbox" name="health" id="health" value="health" />
+									<label for="health">건강/다이어트</label>
+								</li>
+								<li>
+									<input type="checkbox" name="fashion" id="fashion" value="fashion" />
+									<label for="fashion">패션/미용</label>
+								</li>
+							</ul>
+						</dd>
+					</dl>
+					<dl id="join_mail_dl">
+						<dt>
+							
+						</dt>
+						<dd>
+							
 						</dd>
 					</dl>
 					<dl id="join_mail_dl">
@@ -161,19 +263,7 @@
 						
 					</dl>
 					
-					<dl id="join_tell_dl">
-						<dt>
-							<div></div>
-							<label for="f_tell">휴대전화</label>
-						</dt>
-						<dd>
-							<input type="text" id="f_tell" name="f_tell" maxlength="3" required />
-							<span> - </span>
-							<input type="text" id="m_tell" name="m_tell" maxlength="4" required />
-							<span> - </span>
-							<input type="text" id="l_tell" name="l_tell" maxlength="4" required />
-						</dd>
-					</dl>
+					
 					<dl id="join_birth_dl">
 						<dt>
 							<div></div>
@@ -235,20 +325,7 @@
 							</div>
 						</dd>
 					</dl>
-					<dl id="join_gender_dl">
-						<dt>
-							<div></div>
-							<label for="">성별</label>
-						</dt>
-						<dd>
-							<div>
-								<input type="radio" name="gender" id="male" value="male" checked="checked"/>
-								<label for="male">남성</label>
-								<input type="radio" name="gender" id="female" value="female" />
-								<label for="female">여성</label>
-							</div>
-						</dd>
-					</dl>
+					
 					<dl id="join_newsletter_dl">
 						<dt>
 							<div></div>
@@ -338,63 +415,7 @@
 							<label for="marital_status_n">아니오</label>
 						</dd>
 					</dl>
-					<dl id="join_interests_dl">
-						<dt>
-							<label for="">관심사</label>
-						</dt>
-						<dd>
-							<ul>
-								<li>
-									<input type="checkbox" name="computer" id="computer" value="computer" />
-									<label for="computer">컴퓨터/인터넷</label>
-								</li>
-								<li>
-									<input type="checkbox" name="movie" id="movie" value="movie" />
-									<label for="movie">영화/비디오</label>
-								</li>
-								<li>
-									<input type="checkbox" name="music" id="music" value="music" />
-									<label for="music">음악</label>
-								</li>
-								<li>
-									<input type="checkbox" name="shopping" id="shopping" value="shopping" />
-									<label for="shopping">쇼핑</label>
-								</li>
-								<li>
-									<input type="checkbox" name="game" id="game" value="game" />
-									<label for="game">게임</label>
-								</li>
-								<li>
-									<input type="checkbox" name="culture" id="culture" value="culture" />
-									<label for="culture">문화/예술</label>
-								</li>
-								<li>
-									<input type="checkbox" name="parenting" id="parenting" value="parenting" />
-									<label for="parenting">육아/아동</label>
-								</li>
-								<li>
-									<input type="checkbox" name="cooking" id="cooking" value="cooking" />
-									<label for="parenting">요리</label>
-								</li>
-								<li>
-									<input type="checkbox" name="interier" id="interier" value="interier" />
-									<label for="interier">인테리어</label>
-								</li>
-								<li>
-									<input type="checkbox" name="leisure" id="leisure" value="leisure" />
-									<label for="leisure">레저/여가</label>
-								</li>
-								<li>
-									<input type="checkbox" name="health" id="health" value="health" />
-									<label for="health">건강/다이어트</label>
-								</li>
-								<li>
-									<input type="checkbox" name="fashion" id="fashion" value="fashion" />
-									<label for="fashion">패션/미용</label>
-								</li>
-							</ul>
-						</dd>
-					</dl>
+					
 				</fieldset>
 				<div id="info_input_button">
 					<input type="reset" value="취소하기" />

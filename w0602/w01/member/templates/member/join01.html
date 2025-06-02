@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="css/style_header.css">
-		<link rel="stylesheet" type="text/css" href="css/style_join01_terms.css">
-		<link rel="stylesheet" type="text/css" href="css/style_footer.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/style_header.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/style_join01_terms.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/style_footer.css">
 		<title>회원가입 - 약관동의</title>
 	</head>
 	<body>
@@ -19,7 +20,7 @@
 				</ul>
 			</div>	
 			<nav>
-				<a href="#"></a>
+				<a href="/"></a>
 				<ul>
 					<li><a href="#">COOKIT소개</a></li>
 					<li><a href="#">COOKIT메뉴</a></li>
@@ -43,7 +44,8 @@
 		
 		
 		<section>
-			<form name="agree" method="get" action="join02_info_input.html">
+			<form name="agree" method="get" action="/member/join02/">
+				{% csrf_token %}
 				<div id="subBanner"></div>
 				<div id="locationN">
 					<ul>
