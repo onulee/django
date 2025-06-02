@@ -44,7 +44,8 @@
 		
 		
 		<section>
-			<form name="agree" method="get" action="join03_success.html">
+			<form name="agree" method="post" action="/member/join03/">
+				{% csrf_token %}
 				<div id="subBanner"></div>
 				<div id="locationN">
 					<ul>
@@ -98,7 +99,7 @@
 							<label for="pw1">비밀번호</label>
 						</dt>
 						<dd>
-							<input type="password" id="pw1" name="pw1" minlength="8" required />
+							<input type="password" id="pw1" name="pw" minlength="8" required />
 							<span>영문, 숫자, 특수문자 중 2종류 조합 시 10자리 이상 입력</span>
 							<span>영문, 숫자, 특수문자 모두 조합 시 8자리 이상 입력</span>
 						</dd>
@@ -151,67 +152,44 @@
 						</dt>
 						<dd>
 							<div>
-								<input type="radio" name="gender" id="male" value="male" checked="checked"/>
+								<input type="radio" name="gender" id="male" value="남자" checked="checked"/>
 								<label for="male">남성</label>
-								<input type="radio" name="gender" id="female" value="female" />
+								<input type="radio" name="gender" id="female" value="여자" />
 								<label for="female">여성</label>
 							</div>
 						</dd>
 					</dl>
 					<dl id="join_interests_dl">
 						<dt>
-							<label for="">관심사</label>
+							<label for="">취미</label>
 						</dt>
 						<dd>
 							<ul>
 								<li>
-									<input type="checkbox" name="computer" id="computer" value="computer" />
-									<label for="computer">컴퓨터/인터넷</label>
-								</li>
-								<li>
-									<input type="checkbox" name="movie" id="movie" value="movie" />
-									<label for="movie">영화/비디오</label>
-								</li>
-								<li>
-									<input type="checkbox" name="music" id="music" value="music" />
-									<label for="music">음악</label>
-								</li>
-								<li>
-									<input type="checkbox" name="shopping" id="shopping" value="shopping" />
-									<label for="shopping">쇼핑</label>
-								</li>
-								<li>
-									<input type="checkbox" name="game" id="game" value="game" />
+									<input type="checkbox" name="hobby" id="game" value="게임" />
 									<label for="game">게임</label>
 								</li>
 								<li>
-									<input type="checkbox" name="culture" id="culture" value="culture" />
-									<label for="culture">문화/예술</label>
+									<input type="checkbox" name="hobby" id="golf" value="골프" />
+									<label for="golf">골프</label>
 								</li>
 								<li>
-									<input type="checkbox" name="parenting" id="parenting" value="parenting" />
-									<label for="parenting">육아/아동</label>
+									<input type="checkbox" name="hobby" id="swim" value="수영" />
+									<label for="swim">수영</label>
 								</li>
 								<li>
-									<input type="checkbox" name="cooking" id="cooking" value="cooking" />
-									<label for="parenting">요리</label>
+									<input type="checkbox" name="hobby" id="run" value="조깅" />
+									<label for="run">조깅</label>
 								</li>
 								<li>
-									<input type="checkbox" name="interier" id="interier" value="interier" />
-									<label for="interier">인테리어</label>
+									<input type="checkbox" name="hobby" id="book" value="독서" />
+									<label for="book">독서</label>
 								</li>
 								<li>
-									<input type="checkbox" name="leisure" id="leisure" value="leisure" />
-									<label for="leisure">레저/여가</label>
+									<input type="checkbox" name="hobby" id="culture" value="문화예술" />
+									<label for="culture">문화예술</label>
 								</li>
-								<li>
-									<input type="checkbox" name="health" id="health" value="health" />
-									<label for="health">건강/다이어트</label>
-								</li>
-								<li>
-									<input type="checkbox" name="fashion" id="fashion" value="fashion" />
-									<label for="fashion">패션/미용</label>
-								</li>
+								
 							</ul>
 						</dd>
 					</dl>
