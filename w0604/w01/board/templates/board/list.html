@@ -82,7 +82,13 @@
       {% for board in list %}
       <tr>
         <td>{{board.bno}}</td>
-        <td class="table-title"><a href='{% url "board:view" board.bno %}'>{{board.btitle}}</a></td>
+        <td class="table-title">
+          <a href='{% url "board:view" board.bno %}'>
+            <!-- board.bindent 숫자개념으로 변경  -->
+            {% for i in ""|rjust:board.bindent %}▶{%endfor%}
+            {{board.btitle}}
+          </a>
+        </td>
         <td>{{board.id}}</td>
         <td>{{board.bhit}}</td>
         <td>{{board.bdate|date:'Y-m-d'}}</td>

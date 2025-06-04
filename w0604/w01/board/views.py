@@ -9,18 +9,25 @@ def reply(request,bno):
         context = {'board':qs}
         return render(request,'board/reply.html',context)
     elif request.method == 'POST':
-        id = request.POST.get("id")
-        bgroup = request.POST.get("bgroup")
-        bstep = request.POST.get("bstep")
-        bindent = request.POST.get("bindent")
+        id = request.POST.get("id") #session_id 가져옴.
+        bgroup = request.POST.get("bgroup")  # 부모의 bgroup
+        bstep = int(request.POST.get("bstep")) # 부모의 bstep
+        bindent = int(request.POST.get("bindent")) #부모의 bindent
         btitle = request.POST.get("btitle")
         bcontent = request.POST.get("bcontent")
         bfile = request.POST.get("bfile")
         
-        
-        
-        
-        context = {"msg":1}
+        ### 답글달기저장
+        # 1.  gt, lt, gte, lte 언더바 2개 넣어야 함.
+        # 부모보다 bstep 더 큰것, 모든자식들은 전부 bstep을 1씩 증가시켜야 함.
+        # F함수 현재 찾아진 컬럼의 값을 모두 가져옴.
+        reply_qs = Board.objects.filter(bgroup=bgroup,bstep__gt=bstep)
+        reply_qs.update(bstep = F('bstep')+1)
+        # 2. db저장
+        qs = Board.objects.create(id=id,btitle=btitle,bcontent=bcontent,
+            bgroup=bgroup,bstep=bstep+1,bindent=bindent+1,bfile=bfile)
+        print('')        
+        context = {"msg":1,'board':qs}
         return render(request,'board/reply.html',context)
         
 
