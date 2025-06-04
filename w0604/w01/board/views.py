@@ -2,6 +2,36 @@ from django.shortcuts import render,redirect
 from board.models import Board
 from django.db.models import F
 
+# 답글달기 - 답글달기페이지열기, 답글달기저장
+def reply(request,bno):
+    if request.method == 'GET':
+        qs = Board.objects.get(bno=bno)
+        context = {'board':qs}
+        return render(request,'board/reply.html',context)
+    elif request.method == 'POST':
+        id = request.POST.get("id")
+        bgroup = request.POST.get("bgroup")
+        bstep = request.POST.get("bstep")
+        bindent = request.POST.get("bindent")
+        btitle = request.POST.get("btitle")
+        bcontent = request.POST.get("bcontent")
+        bfile = request.POST.get("bfile")
+        
+        
+        
+        
+        context = {"msg":1}
+        return render(request,'board/reply.html',context)
+        
+
+
+# 게시글 삭제
+def delete(request,bno):
+    ## 게시글 삭제
+    Board.objects.get(bno=bno).delete()    
+    return redirect('/board/list/')
+
+
 # 게시글수정 - 업데이트페이지열기, 업데이트저장
 def update(request,bno):
     if request.method == 'GET':
@@ -9,8 +39,15 @@ def update(request,bno):
         context = {'board':qs}
         return render(request,'board/update.html',context)
     elif request.method == 'POST':
-        
-        context = {'msg':1}
+        btitle = request.POST.get('btitle')
+        bcontent = request.POST.get('bcontent')
+        bfile = request.POST.get('bfile')
+        qs = Board.objects.get(bno=bno)
+        qs.btitle = btitle
+        qs.bcontent = bcontent
+        # qs.bfile = bfile
+        qs.save()
+        context = {'msg':1,'board':qs}
         return render(request,'board/update.html',context)
         
 
