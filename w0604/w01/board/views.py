@@ -2,6 +2,19 @@ from django.shortcuts import render,redirect
 from board.models import Board
 from django.db.models import F
 
+# 게시글수정 - 업데이트페이지열기, 업데이트저장
+def update(request,bno):
+    if request.method == 'GET':
+        qs = Board.objects.get(bno=bno)
+        context = {'board':qs}
+        return render(request,'board/update.html',context)
+    elif request.method == 'POST':
+        
+        context = {'msg':1}
+        return render(request,'board/update.html',context)
+        
+
+
 # 게시글쓰기 - 게시글페이지열기, 게시글저장
 def write(request):
     if request.method == "GET":
@@ -19,7 +32,8 @@ def write(request):
         qs = Board.objects.create(id=id,btitle=btitle,bcontent=bcontent,bfile=bfile)
         qs.bgroup = qs.bno
         qs.save()
-        return render(request,'board/write.html')
+        context = {'msg':1}
+        return render(request,'board/write.html',context)
 
 # 게시글보기
 def view(request,bno):
