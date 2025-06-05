@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from board.models import Board
-from django.db.models import F
+# F : 검색된 필드에서 특정컬럼의 값을 가져올때
+# Q : and,or,not 연산을 사용할때 
+from django.db.models import F,Q
 from django.core.paginator import Paginator
 
 # 답글달기 - 답글달기페이지열기, 답글달기저장
@@ -89,9 +91,12 @@ def view(request,bno):
     # context = {'board':qs}
     
     # 2.F함수사용 - filter검색후, 특정컬럼의 값을 가져오는 함수
+    category = request.GET.get('category','')
+    search = request.GET.get('search','')
+    
     qs = Board.objects.filter(bno=bno) # 리스트
     qs.update(bhit = F('bhit')+1) #save까지 됨.
-    context = {'board':qs[0]}
+    context = {'board':qs[0],'category':category,'search':search}
     
     return render(request,'board/view.html',context)
 
@@ -101,10 +106,9 @@ def view(request,bno):
 def list(request):
     # 현재페이지 int변경
     page = int(request.GET.get('page',1)) # 없을때, 1페이지로 넘겨줌
-    #search
-    
-    search = request.POST.get('search','') 
-    category = request.POST.get('category','')
+    #search으로 넘어올때
+    search = request.GET.get('search','') 
+    category = request.GET.get('category','')
     print('검색데이터 : ',category,search)
     
     if search == '':  # 일반리스트로 넘어온 경우
@@ -116,12 +120,19 @@ def list(request):
         context = {"list":list,'page':page}
         return render(request,'board/list.html',context)
     else:            # 검색으로 넘어온 경우
-        # 게시글 전체 가져오기
-        qs = Board.objects.order_by('-bgroup','bstep')
+        # 게시글 전체 가져오기  and:& or:| not:~
+        if category == 'all':
+            qs = Board.objects.filter(
+                Q(btitle__contains=search) | Q(bcontent__contains=search))
+        elif category == 'btitle':
+            qs = Board.objects.filter(btitle__contains=search)
+        else:
+            qs = Board.objects.filter(bcontent__contains=search)
+        
         # 페이지 분기
         paginator = Paginator(qs,20) # 100개 -> 10개씩 쪼개서 전달해줌.
         list = paginator.get_page(page)  # 현재페이지에 해당되는 게시글 전달
-        context = {"list":list,'page':page}
+        context = {"list":list,'page':page,'category':category,'search':search}
         return render(request,'board/list.html',context)
         
     

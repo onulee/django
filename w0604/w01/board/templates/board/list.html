@@ -5,10 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="/static/css/notice_list.css">
+  <script>
+     function searchBtn(){
+      if($('#stxt').val().length<2){
+        alert("검색 내용을 입력하세요.");
+        $("#stxt").focus();
+        return;
+      }
+      searchFrm.submit();
+     }
+  </script>
 </head>
 <body>
   <header>
@@ -48,7 +59,7 @@
   <section>
     <h1>NOTICE</h1>
     <div class="wrapper">
-      <form action="/board/list" name="search" method="post">
+      <form action="/board/list/" name="searchFrm" method="get">
         {% csrf_token %}
         <select name="category" id="category">
           <option value="all">전체</option>
@@ -57,7 +68,7 @@
         </select>
 
         <div class="title">
-          <input type="text" size="16" name='search'>
+          <input type="text" size="16" name='search' id='stxt'>
         </div>
         <button type="button" onclick='searchBtn()'><i class="fas fa-search"></i></button>
       </form>
@@ -82,7 +93,7 @@
       <tr>
         <td>{{board.bno}}</td>
         <td class="table-title">
-          <a href='{% url "board:view" board.bno %}'>
+          <a href='/board/view/{{board.bno}}/?category={{category}}&search={{search}}'>
             <!-- board.bindent 숫자개념으로 변경  -->
             {% for i in ""|rjust:board.bindent %}▶{%endfor%}
             {{board.btitle}}
@@ -107,8 +118,8 @@
     <!-- 하단넘버링 -->
     <ul class="page-num">
       {% if list.has_previous %}
-        <a href='?page=1'><li class="first"></li></a>
-        <a href='?page={{list.previous_page_number}}'><li class="prev"></li></a>
+        <a href='?page=1&category={{category}}&search={{search}}'><li class="first"></li></a>
+        <a href='?page={{list.previous_page_number}}&category={{category}}&search={{search}}'><li class="prev"></li></a>
       {% else %}
         <li class="first"></li>
         <li class="prev"></li>
@@ -116,14 +127,14 @@
       {% comment %} {% for p in list.number|add:3 %} {% endcomment %}
       {% for p in list.paginator.page_range %}
         {% if p != page %}
-          <a href='?page={{p}}'><li class="num"><div>{{p}}</div></li></a>  
+          <a href='?page={{p}}&category={{category}}&search={{search}}'><li class="num"><div>{{p}}</div></li></a>  
         {% else %}
           <li class="num on"><div>{{p}}</div></li>
         {% endif %}
       {% endfor %}
       {% if list.has_next %}
-        <a href='?page={{list.next_page_number}}'><li class="next"></li></a>
-        <a href='?page={{list.paginator.num_pages}}'><li class="last"></li></a>
+        <a href='?page={{list.next_page_number}}&category={{category}}&search={{search}}'><li class="next"></li></a>
+        <a href='?page={{list.paginator.num_pages}}&category={{category}}&search={{search}}'><li class="last"></li></a>
       {% else %}
         <li class="next"></li>
         <li class="last"></li>
