@@ -18,7 +18,7 @@ def reply(request,bno):
         bindent = int(request.POST.get("bindent")) #부모의 bindent
         btitle = request.POST.get("btitle")
         bcontent = request.POST.get("bcontent")
-        bfile = request.POST.get("bfile")
+        bfile = request.FILES.get("bfile",'')
         
         ### 답글달기저장
         # 1.  gt, lt, gte, lte 언더바 2개 넣어야 함.
@@ -51,11 +51,14 @@ def update(request,bno):
     elif request.method == 'POST':
         btitle = request.POST.get('btitle')
         bcontent = request.POST.get('bcontent')
-        bfile = request.POST.get('bfile')
+        bfile_pre = request.POST.get('bfile_pre','')
+        bfile = request.FILES.get('bfile','') # 파일업로드
+        if not bfile:
+            bfile = bfile_pre
         qs = Board.objects.get(bno=bno)
         qs.btitle = btitle
         qs.bcontent = bcontent
-        # qs.bfile = bfile
+        qs.bfile = bfile
         qs.save()
         context = {'msg':1,'board':qs}
         return render(request,'board/update.html',context)
@@ -74,7 +77,7 @@ def write(request):
         # bfile = request.POST.get('bfile')
         bfile = request.FILES.get('bfile','')
         print('파일부분 : ',request.FILES)
-        print('write 가져온 데이터 : ',id,btitle,bcontent,bfile)
+        print('bfile 가져온 데이터 : ',bfile)
         # 1.save() 저장
         # Board(id=id,btitle=btitle,bcontent=bcontent,bfile=bfile).save()
         # 2.create저장
