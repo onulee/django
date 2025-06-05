@@ -71,7 +71,9 @@ def write(request):
         id = request.POST.get('id') #섹션에서 가져옴.
         btitle = request.POST.get('btitle')
         bcontent = request.POST.get('bcontent')
-        bfile = request.POST.get('bfile')
+        # bfile = request.POST.get('bfile')
+        bfile = request.FILES.get('bfile','')
+        print('파일부분 : ',request.FILES)
         print('write 가져온 데이터 : ',id,btitle,bcontent,bfile)
         # 1.save() 저장
         # Board(id=id,btitle=btitle,bcontent=bcontent,bfile=bfile).save()
