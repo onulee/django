@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect
 from board.models import Board
+from django.core.paginator import Paginator
+from django.db.models import F,Q
 
 # 글수정페이지, 글수정저장
 def update(request,bno):
@@ -48,7 +50,27 @@ def write(request):
 
 # 게시판리스트
 def list(request):
-    # 모든 데이터 가져오기
-    qs = Board.objects.order_by('-bno')
-    context = {'list':qs}
-    return render(request,'board/list.html',context)
+    category = request.GET.get('category','')
+    search = request.GET.get('search','')
+    print("list 넘어온 데이터 : ",category,search)
+    page = int(request.GET.get('page',1)) #현재페이지 가져오기
+    
+    if search != '':
+        # 모든 데이터 가져오기
+        qs = Board.objects.order_by('-bgroup','bstep')
+        # 페이지처리
+        paginator = Paginator(qs,5) #페이지처리 100개게시글 -> 10씩 나눔
+        list = paginator.get_page(page) #해당페이지 가져오기 -> 10개중에 해당하는 1개 가져오기
+        context = {'list':list,'page':page}
+        return render(request,'board/list.html',context)
+    else:
+        # 검색된 데이터 가져오기
+        qs = Board.objects.filter(
+           Q(btitle__contains=search) | Q(bcontent__contains=search) 
+            ).order_by('-bgroup','bstep')
+        # 페이지처리
+        paginator = Paginator(qs,5) #페이지처리 100개게시글 -> 10씩 나눔
+        list = paginator.get_page(page) #해당페이지 가져오기 -> 10개중에 해당하는 1개 가져오기
+        context = {'list':list,'page':page,'category':category,'search':search}
+        return render(request,'board/list.html',context)
+        
