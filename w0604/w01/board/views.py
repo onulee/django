@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from board.models import Board
 from django.db.models import F
+from django.core.paginator import Paginator
 
 # 답글달기 - 답글달기페이지열기, 답글달기저장
 def reply(request,bno):
@@ -94,9 +95,16 @@ def view(request,bno):
     
     return render(request,'board/view.html',context)
 
+
+
 # 게시판리스트
 def list(request):
+    # 현재페이지 int변경
+    page = int(request.GET.get('page',1)) # 없을때, 1페이지로 넘겨줌
     # 게시글 전체 가져오기
     qs = Board.objects.order_by('-bgroup','bstep')
-    context = {"list":qs}
+    # 페이지 분기
+    paginator = Paginator(qs,10) # 100개 -> 10개씩 쪼개서 전달해줌.
+    list = paginator.get_page(page)  # 현재페이지에 해당되는 게시글 전달
+    context = {"list":list}
     return render(request,'board/list.html',context)
