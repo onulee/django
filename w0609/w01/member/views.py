@@ -1,10 +1,19 @@
 from django.shortcuts import render
 from member.models import Member
 
+# 로그아웃부분
+def logout(request):
+    request.session.clear()
+    context = {'msg':-1}
+    return render(request,'member/login.html',context)
+
 # 로그인부분 - get, post
 def login(request):
     if request.method == 'GET':
-        return render(request,'member/login.html')
+        ## 쿠키 읽어오기
+        cook_id = request.COOKIES.get('cook_id','')
+        context = {'cook_id':cook_id}
+        return render(request,'member/login.html',context)
     elif request.method == 'POST':
         id = request.POST.get('id')
         pw = request.POST.get('pw')
@@ -17,8 +26,16 @@ def login(request):
             request.session['session_id'] = id #session id를 추가
             msg = 1
         except: print('데이터가 없습니다.')    
-        context = {'msg':msg}
-        return render(request,'member/login.html',context)
+        ## 쿠키 읽어오기
+        cook_id = request.COOKIES.get('cook_id','')
+        context = {'msg':msg,'cook_id':cook_id}
+        response = render(request,'member/login.html',context)
+        ## 쿠키저장
+        if idsave:
+            response.set_cookie('cook_id',id,max_age=60*60*24*30)
+        else:
+            response.delete_cookie('cook_id')    
+        return response
         
 
 # 회원가입부분
