@@ -1,5 +1,10 @@
 from django.shortcuts import render
 
+
+# 회원가입부분
+def step03(request):
+    return render(request,'member/step03.html')
+
 # 약관동의부분
 def step02(request):
     return render(request,'member/step02.html')
