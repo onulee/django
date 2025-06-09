@@ -230,9 +230,14 @@
 					<div class="informbox">
 						<div class="inform">
 							<ul>
-								<li><input type="text" class="loginType" name='id' value='{{cook_id}}'  onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
+								<li><input type="text" class="loginType" name='id' value='{{cook_id}}' onfocus="this.className='mfocus'"  onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" onfocus /></li>
 								<li><input type="password" class="passType" name='pw' onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='passType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
 							</ul>
+							<script>
+								if('{{cook_id}}'!=''){
+									document.querySelector('.loginType').focus();
+								}
+							</script>
 
 							<div class="btn"><a onclick='loginBtn()' class="sbtn">로그인</a></div>
 							<div class="chk">

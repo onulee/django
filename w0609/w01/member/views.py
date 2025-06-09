@@ -38,9 +38,40 @@ def login(request):
         return response
         
 
-# 회원가입부분
+# 회원가입부분 - get,post
 def step03(request):
-    return render(request,'member/step03.html')
+    if request.method == 'GET':
+        return render(request,'member/step03.html')
+    elif request.method == 'POST':
+        name = request.POST.get('name')
+        id = request.POST.get('name')
+        email1 = request.POST.get('email1')
+        email2 = request.POST.get('email2')
+        email = email1+'@'+email2
+        emailc = request.POST.get('emailc')
+        address1 = request.POST.get('address1')
+        address2 = request.POST.get('address2')
+        phone1 = request.POST.get('phone1')
+        phone2 = request.POST.get('phone2')
+        phone3 = request.POST.get('phone3')
+        phone = f'{phone1}-{phone2}-{phone2}'
+        tel1 = request.POST.get('tel1')
+        tel2 = request.POST.get('tel2')
+        tel3 = request.POST.get('tel3')
+        tel = f'{tel1}-{tel2}-{tel3}'
+        birth1 = request.POST.get('birth1')
+        birth2 = request.POST.get('birth2')
+        birth3 = request.POST.get('birth3')
+        birth = f'{birth1}-{birth2}-{birth3}'
+        corporate = request.POST.get('corporate')
+        gender = request.POST.get('gender')
+        hobbys = request.POST.getlist('hobby')
+        hobby = ','.join(hobbys)
+        print("넘어온 데이터 : ",name,id,email,emailc,address1,address2
+              ,phone,tel,birth,corporate,gender,hobby)
+        return render(request,'member/step03.html')
+        
+    
 
 # 약관동의부분
 def step02(request):
