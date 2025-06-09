@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from member.models import Member
 
 # 로그아웃부분
@@ -36,7 +36,12 @@ def login(request):
         else:
             response.delete_cookie('cook_id')    
         return response
-        
+   
+# 회원가입완료부분
+def step04(request,name):
+    print("name : ",name)
+    context={'name':name}
+    return render(request,'member/step04.html',context)        
 
 # 회원가입부분 - get,post
 def step03(request):
@@ -44,10 +49,10 @@ def step03(request):
         return render(request,'member/step03.html')
     elif request.method == 'POST':
         name = request.POST.get('name')
-        id = request.POST.get('name')
+        id = request.POST.get('id')
         email1 = request.POST.get('email1')
         email2 = request.POST.get('email2')
-        email = email1+'@'+email2
+        email = f'{email1}@{email2}'
         emailc = request.POST.get('emailc')
         address1 = request.POST.get('address1')
         address2 = request.POST.get('address2')
@@ -69,7 +74,14 @@ def step03(request):
         hobby = ','.join(hobbys)
         print("넘어온 데이터 : ",name,id,email,emailc,address1,address2
               ,phone,tel,birth,corporate,gender,hobby)
-        return render(request,'member/step03.html')
+        
+        ### Member테이블 저장
+        Member.objects.create(name=name,id=id,email=email,emailc=emailc,
+                    address1=address1,address2=address2,phone=phone,
+                    tel=tel,birth=birth,corporate=corporate,
+                    gender=gender,hobby=hobby)
+        
+        return redirect(f'/member/step04/{name}/')
         
     
 
