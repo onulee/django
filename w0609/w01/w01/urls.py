@@ -8,6 +8,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('member/', include('member.urls')),
     path('board/', include('board.urls')),
+    path('comment/', include('comment.urls')),
 ]
 
 # 파일업로드시 url구성 , urlpatterns 에 추가로 설정이 들어감.

@@ -1,12 +1,30 @@
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
+from django.db.models import F,Q  # F:검색된모든데이터적용시, Q:또는 검색
 from board.models import Board
 from member.models import Member
 
 ## 글 상세보기
 def view(request,bno):
     print("넘어온 데이터 : ",bno)
-    return render(request,'board/view.html')
+    # 현재글 - list타입
+    qs = Board.objects.filter(bno=bno)
+    
+    # 이전글
+    pre_qs = Board.objects.filter(
+       Q(ntchk__lte=qs[0].ntchk,bgroup__lt=qs[0].bgroup,bstep__lte=qs[0].bstep)|
+       Q(ntchk=qs[0].ntchk,bgroup__lt=qs[0].bgroup)
+    ).order_by('-ntchk','-bgroup','bstep').first()
+    # 다음글
+    next_qs = Board.objects.filter(
+       Q(ntchk__gte=qs[0].ntchk,bgroup__gt=qs[0].bgroup,bstep__gte=qs[0].bstep)|
+       Q(ntchk__gt=qs[0].ntchk)
+    ).order_by('ntchk','bgroup','-bstep').first()
+    print('현재글 : ',qs[0].bno)
+    #print('이전글 : ',pre_qs.bno)
+    #print('다음글 : ',next_qs.bno)
+    context = {'board':qs[0],'pre_board':pre_qs,'next_board':next_qs}
+    return render(request,'board/view.html',context)
 
 ## 글쓰기 - get,post
 def write(request):
