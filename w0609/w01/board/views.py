@@ -2,6 +2,14 @@ from django.shortcuts import render
 from django.core.paginator import Paginator
 from board.models import Board
 
+## 글쓰기 - get,post
+def write(request):
+    if request.method == 'GET':
+        return render(request,'board/write.html')
+    elif request.method == 'POST':
+        return render(request,'board/write.html')
+        
+
 ## 게시판리스트
 def list(request):
     # 페이지번호가 있어야 함.
