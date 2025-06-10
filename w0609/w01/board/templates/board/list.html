@@ -235,7 +235,7 @@ $(document).ready(function() {
 								<tr>
 									<td class="tnone">{{board.bno}}</td>
 									<td class="left">
-										<a href="#">{% if board.ntchk >= 1 %}<strong style='color:#f7703c;'>[공지]</strong>{%endif%}
+										<a href="/board/view/{{board.bno}}/">{% if board.ntchk >= 1 %}<strong style='color:#f7703c;'>[공지]</strong>{%endif%}
 											{{board.btitle}}
 										</a>
 									</td>

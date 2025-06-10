@@ -3,6 +3,11 @@ from django.core.paginator import Paginator
 from board.models import Board
 from member.models import Member
 
+## 글 상세보기
+def view(request,bno):
+    print("넘어온 데이터 : ",bno)
+    return render(request,'board/view.html')
+
 ## 글쓰기 - get,post
 def write(request):
     if request.method == 'GET':
