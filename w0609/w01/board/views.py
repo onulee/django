@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from board.models import Board
+from member.models import Member
 
 ## 글쓰기 - get,post
 def write(request):
@@ -8,13 +9,19 @@ def write(request):
         return render(request,'board/write.html')
     elif request.method == 'POST':
         id = request.POST.get('id')
+        member = Member.objects.get(id=id)
         # id = request.session.get('session_id') # session에서 가져오기
         btitle = request.POST.get('btitle')
         bcontent = request.POST.get('bcontent')
         bfile = request.FILES.get('bfile','')
-        ntchk = request.POST.get('ntchk')
+        ntchk = request.POST.get('ntchk',0)
         print("넘어온 데이터 : ",id,btitle,bcontent,bfile,ntchk)
-        return render(request,'board/write.html')
+        ### db저장
+        qs = Board.objects.create(member=member,btitle=btitle,bcontent=bcontent,bfile=bfile,ntchk=ntchk)
+        # 답글달기할때 필요
+        qs.bgroup = qs.bno
+        qs.save()        
+        return redirect('/board/list/')
         
 
 ## 게시판리스트

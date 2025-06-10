@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# 프로젝트 디렉토리
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
