@@ -7,6 +7,13 @@ def write(request):
     if request.method == 'GET':
         return render(request,'board/write.html')
     elif request.method == 'POST':
+        id = request.POST.get('id')
+        # id = request.session.get('session_id') # session에서 가져오기
+        btitle = request.POST.get('btitle')
+        bcontent = request.POST.get('bcontent')
+        bfile = request.FILES.get('bfile','')
+        ntchk = request.POST.get('ntchk')
+        print("넘어온 데이터 : ",id,btitle,bcontent,bfile,ntchk)
         return render(request,'board/write.html')
         
 
