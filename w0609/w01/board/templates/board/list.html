@@ -250,8 +250,13 @@ $(document).ready(function() {
 					</div>
 						
 
-
+					
 					<div class="btnAreaList">
+						<div class="bwright">
+							<ul>
+								<li><a href="#" class="sbtnMini">글쓰기</a></li>
+							</ul>
+						</div>
 						<!-- 페이징이동1 -->
 						<div class="allPageMoving1">
 						<!-- 첫페이지,이전페이지 이동 -->	
@@ -267,18 +272,23 @@ $(document).ready(function() {
 							{% if i == page %}
 								<strong>{{i}}</strong>
 							{% else %}
-								<a href="#">{{i}}</a>
+								<a href="/board/list/?page={{i}}">{{i}}</a>
 							{% endif %}
 						{% endfor %}
 						<!-- 마지막페이지, 다음페이지 이동 -->	
-						<a href="#" class="next"><img src="/static/images/btn/btn_next1.gif" alt="뒤페이지로"/></a>
-						<a href="#" class="n"><img src="/static/images/btn/btn_next2.gif" alt="마지막페이지로"/></a>
-
+						{% if not list.has_next %}
+						<a class="next"><img src="/static/images/btn/btn_next1.gif" alt="뒤페이지로"/></a>
+						<a class="n"><img src="/static/images/btn/btn_next2.gif" alt="마지막페이지로"/></a>
+						{% else %}
+						<a href="/board/list/?page={{list.next_page_number}}" class="next"><img src="/static/images/btn/btn_next1.gif" alt="뒤페이지로"/></a>
+						<a href="/board/list/?page={{list.paginator.num_pages}}" class="n"><img src="/static/images/btn/btn_next2.gif" alt="마지막페이지로"/></a>
+						{% endif %}	
 						</div>
 						<!-- //페이징이동1 -->
 					</div>
-
+					
 					<div class="searchWrap">
+						
 						<div class="search">
 							<ul>
 								<li class="web"><img src="/static/images/txt/txt_search.gif" alt="search" /></li>
