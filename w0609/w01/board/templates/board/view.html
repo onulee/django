@@ -274,6 +274,8 @@ $(document).ready(function() {
 					<!-- //이전다음글 -->
 					<script>
 						$(function(){
+							//전역변수 
+							csrfToken = $('meta[name="csrf-token"]').attr('content');
 							// 하단댓글등록
 							$('.replyBtn').click(function(){
 								if('{{request.session.session_id}}'==''){
@@ -289,7 +291,7 @@ $(document).ready(function() {
 								//데이터
 								cpw = $('.replynum').val();
 								ccontent = $('.replyType').val();
-								csrfToken = $('meta[name="csrf-token"]').attr('content');
+								
 								
 								//ajax데이터전송
 								$.ajax({
@@ -325,11 +327,35 @@ $(document).ready(function() {
 							});//replyBtn
 
 
-							// 하단댓글삭제
+							// 하단댓글삭제 .click : 정적명령어구문-처음html페이지 있는 것만 삭제가능
+							//$('.delBtn').click(function(){
+							// .on 동적명령어구문
 							$('.delBtn').click(function(){
-								alert('삭제버튼이 클릭되었습니다.');
-								console.log("현재위치 : ",$(this).closest('ul').attr('id'));
-							});
+								alert("테스트");
+								let cno = $(this).closest('ul').attr('id');
+								console.log("현재위치 : ",cno);
+								if(confirm(`${cno}번 게시글을 삭제하시겠습니까?`)){
+									// db부분 삭제 -> ajax요청
+									$.ajax({
+										url: '/comment/cdelete/',
+										type:'post',
+										headers:{'X-CSRFToken':csrfToken},
+										data:{'cno':cno},
+										success:function(data){
+											alert('성공');
+											console.log('넘어온데이터 : ',data);
+											$(`#${cno}`).remove();
+											$('.c_count').text(Number($('.c_count').text())-1);
+											alert(`${cno}번 게시글을 삭제했습니다.`);
+										},
+										error:function(){
+											alert('실패');
+										}
+									});//ajax선언
+								}//confirm
+							});//
+
+							
 
 
 						});//jquery선언
@@ -340,7 +366,7 @@ $(document).ready(function() {
 					<div class="replyWrite">
 						<ul>
 							<li class="in">
-								<p class="txt">총 <span class="orange">{{comment.count}}</span> 개의 댓글이 달려있습니다.</p>
+								<p class="txt">총 <span class="orange c_count">{{comment.count}}</span> 개의 댓글이 달려있습니다.</p>
 								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" name='cpw' class="replynum" /></p>
 								<textarea class="replyType" name='ccontent'></textarea>
 							</li>

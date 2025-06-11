@@ -6,6 +6,15 @@ from member.models import Member
 from board.models import Board
 from comment.models import Comment
 
+# 하단댓글삭제
+def cdelete(request):
+    # cno데이터 확인
+    cno = request.POST.get('cno')
+    print('하단댓글 번호 : ',cno)
+    qs = Comment.objects.get(cno=cno)
+    qs.delete()
+    context = {'result':'success'}
+    return JsonResponse(context)
 
 # 하단댓글저장
 def cwrite(request):
