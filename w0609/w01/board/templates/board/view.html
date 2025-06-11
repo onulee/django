@@ -290,7 +290,6 @@ $(document).ready(function() {
 								cpw = $('.replynum').val();
 								ccontent = $('.replyType').val();
 								
-								
 								//ajax데이터전송
 								$.ajax({
 									url:'/comment/cwrite/',
@@ -299,7 +298,6 @@ $(document).ready(function() {
 									data:{'cpw':cpw,'ccontent':ccontent,'bno':'{{board.bno}}'},
 									success:function(data){
 										console.log(data);
-										alert('성공');
 										cdate = moment(data.comment[0].cdate).format('YYYY-MM-DD HH:mm:ss');
 										//하단댓글 등록
 										var hdata = ``;
@@ -308,12 +306,13 @@ $(document).ready(function() {
 										hdata += `<li class="txt">${data.comment[0].ccontent}</li>`;
 										hdata += `<li class="btn">`;
 										hdata += `<a class="rebtn">수정</a>&nbsp`;
-										hdata += `<a class="rebtn delbtn">삭제</a>`;
+										hdata += `<a class="rebtn delBtn">삭제</a>`;
 										hdata += `</li>`;
 										hdata += `</ul>`;
-
 										$(".replyBox").prepend(hdata);
 
+										// 하단댓글 총개수 추가
+										$('.c_count').text(Number($('.c_count').text())+1);
 										// inputbox 글자 삭제
 										$('.replynum').val('');
 										$('.replyType').val('');
@@ -339,9 +338,9 @@ $(document).ready(function() {
 										headers:{'X-CSRFToken':csrfToken},
 										data:{'cno':cno},
 										success:function(data){
-											alert('성공');
 											console.log('넘어온데이터 : ',data);
 											$(`#${cno}`).remove();
+											// 하단댓글 총개수 감소
 											$('.c_count').text(Number($('.c_count').text())-1);
 											alert(`${cno}번 게시글을 삭제했습니다.`);
 										},
