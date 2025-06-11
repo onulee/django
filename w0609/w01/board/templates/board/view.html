@@ -15,8 +15,6 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- 날짜 포맷함수 -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static/js/top_navi.js"></script>
 <script type="text/javascript" src="/static/js/left_navi.js"></script>
 <script type="text/javascript" src="/static/js/main.js"></script>
@@ -302,15 +300,15 @@ $(document).ready(function() {
 									success:function(data){
 										console.log(data);
 										alert('성공');
-
+										cdate = moment(data.comment[0].cdate).format('YYYY-MM-DD HH:mm:ss');
 										//하단댓글 등록
 										var hdata = ``;
 										hdata += `<ul id='${data.comment[0].cno}'>`;
-										hdata += `<li class="name">{{request.session.session_name}} <span>[ ${data.comment[0].cdate} ]</span></li>`;
+										hdata += `<li class="name">{{request.session.session_name}} <span>[ ${cdate} ]</span></li>`;
 										hdata += `<li class="txt">${data.comment[0].ccontent}</li>`;
 										hdata += `<li class="btn">`;
 										hdata += `<a class="rebtn">수정</a>&nbsp`;
-										hdata += `<a class="rebtn">삭제</a>`;
+										hdata += `<a class="rebtn delbtn">삭제</a>`;
 										hdata += `</li>`;
 										hdata += `</ul>`;
 
@@ -330,8 +328,7 @@ $(document).ready(function() {
 							// 하단댓글삭제 .click : 정적명령어구문-처음html페이지 있는 것만 삭제가능
 							//$('.delBtn').click(function(){
 							// .on 동적명령어구문
-							$('.delBtn').click(function(){
-								alert("테스트");
+							$(document).on("click",".delBtn",function(){
 								let cno = $(this).closest('ul').attr('id');
 								console.log("현재위치 : ",cno);
 								if(confirm(`${cno}번 게시글을 삭제하시겠습니까?`)){
