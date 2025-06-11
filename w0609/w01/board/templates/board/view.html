@@ -13,6 +13,9 @@
 <link rel="stylesheet" type="text/css" href="/static/css/layout.css?v=Y" />
 <link rel="stylesheet" type="text/css" href="/static/css/content.css?v=Y" />
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- 날짜 포맷함수 -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static/js/top_navi.js"></script>
 <script type="text/javascript" src="/static/js/left_navi.js"></script>
@@ -273,6 +276,11 @@ $(document).ready(function() {
 						$(function(){
 							// 하단댓글등록
 							$('.replyBtn').click(function(){
+								if('{{request.session.session_id}}'==''){
+									alert('로그인을 하셔야 하단댓글 등록이 가능합니다.');
+									location.href='/member/login/';
+									return;
+								}
 								alert('하단댓글을 등록합니다.');
 								console.log('비밀번호 : ',$('.replynum').val())
 								console.log('게시글번호 : ','{{board.bno}}')
@@ -293,38 +301,36 @@ $(document).ready(function() {
 										console.log(data);
 										alert('성공');
 
+										//하단댓글 등록
 										var hdata = ``;
 										hdata += `<ul id='${data.comment[0].cno}'>`;
-										hdata += `<li class="name">${data.comment[0].member_id} <span>[ ${data.comment[0].cdate} ]</span></li>`;
+										hdata += `<li class="name">{{request.session.session_name}} <span>[ ${data.comment[0].cdate} ]</span></li>`;
 										hdata += `<li class="txt">${data.comment[0].ccontent}</li>`;
 										hdata += `<li class="btn">`;
-										hdata += `<a class="rebtn">수정</a>`;
+										hdata += `<a class="rebtn">수정</a>&nbsp`;
 										hdata += `<a class="rebtn">삭제</a>`;
 										hdata += `</li>`;
 										hdata += `</ul>`;
 
 										$(".replyBox").prepend(hdata);
-										
-											
-											
-											
-												
-												
-											
-										
 
-
-
-
-
+										// inputbox 글자 삭제
+										$('.replynum').val('');
+										$('.replyType').val('');
 									},
 									error:function(){
 										alert('실패');
 									}
-
 								});//ajax선언
-
 							});//replyBtn
+
+
+							// 하단댓글삭제
+							$('.delBtn').click(function(){
+								alert('삭제버튼이 클릭되었습니다.');
+								console.log("현재위치 : ",$(this).closest('ul').attr('id'));
+							});
+
 
 						});//jquery선언
 
@@ -350,8 +356,8 @@ $(document).ready(function() {
 							<li class="name">{{c.member.name}} <span>[ {{c.cdate|date:'Y-m-d  H:i:s'}} ]</span></li>
 							<li class="txt">{{c.ccontent}}</li>
 							<li class="btn">
-								<a class="rebtn">수정</a>
-								<a class="rebtn">삭제</a>
+								<a class="rebtn ">수정</a>
+								<a class="rebtn delBtn">삭제</a>
 							</li>
 						</ul>
 						{% endfor %}

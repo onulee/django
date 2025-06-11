@@ -26,7 +26,7 @@ def view(request,bno):
     #print('다음글 : ',next_qs.bno)
     
     # 하단댓글
-    c_qs = Comment.objects.filter(board=qs[0])
+    c_qs = Comment.objects.filter(board=qs[0]).order_by('-cno')
     print("하단댓글 데이터 : ",c_qs)
     
     context = {'board':qs[0],'pre_board':pre_qs,'next_board':next_qs,'comment':c_qs}
