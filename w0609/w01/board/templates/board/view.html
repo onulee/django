@@ -275,6 +275,7 @@ $(document).ready(function() {
 							$('.replyBtn').click(function(){
 								alert('하단댓글을 등록합니다.');
 								console.log('비밀번호 : ',$('.replynum').val())
+								console.log('게시글번호 : ','{{board.bno}}')
 								console.log('내용 : ',$('.replyType').val())
 								console.log('csrf-token : ',$('meta[name="csrf-token"]').attr('content'));
 								//데이터
@@ -284,13 +285,38 @@ $(document).ready(function() {
 								
 								//ajax데이터전송
 								$.ajax({
-									url:'/comment/list/',
+									url:'/comment/cwrite/',
 									type:'post',
 									headers:{'X-CSRFToken':csrfToken},
 									data:{'cpw':cpw,'ccontent':ccontent,'bno':'{{board.bno}}'},
 									success:function(data){
 										console.log(data);
 										alert('성공');
+
+										var hdata = ``;
+										hdata += `<ul id='${data.comment[0].cno}'>`;
+										hdata += `<li class="name">${data.comment[0].member_id} <span>[ ${data.comment[0].cdate} ]</span></li>`;
+										hdata += `<li class="txt">${data.comment[0].ccontent}</li>`;
+										hdata += `<li class="btn">`;
+										hdata += `<a class="rebtn">수정</a>`;
+										hdata += `<a class="rebtn">삭제</a>`;
+										hdata += `</li>`;
+										hdata += `</ul>`;
+
+										$(".replyBox").prepend(hdata);
+										
+											
+											
+											
+												
+												
+											
+										
+
+
+
+
+
 									},
 									error:function(){
 										alert('실패');
