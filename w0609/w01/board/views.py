@@ -3,8 +3,9 @@ from django.core.paginator import Paginator
 from django.db.models import F,Q  # F:검색된모든데이터적용시, Q:또는 검색
 from board.models import Board
 from member.models import Member
+from comment.models import Comment
 
-## 글 상세보기
+## 글 상세보기 - 하단댓글포함
 def view(request,bno):
     print("넘어온 데이터 : ",bno)
     # 현재글 - list타입
@@ -23,7 +24,12 @@ def view(request,bno):
     print('현재글 : ',qs[0].bno)
     #print('이전글 : ',pre_qs.bno)
     #print('다음글 : ',next_qs.bno)
-    context = {'board':qs[0],'pre_board':pre_qs,'next_board':next_qs}
+    
+    # 하단댓글
+    c_qs = Comment.objects.filter(board=qs[0])
+    print("하단댓글 데이터 : ",c_qs)
+    
+    context = {'board':qs[0],'pre_board':pre_qs,'next_board':next_qs,'comment':c_qs}
     return render(request,'board/view.html',context)
 
 ## 글쓰기 - get,post

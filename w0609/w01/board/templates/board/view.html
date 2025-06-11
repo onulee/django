@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="/static/css/reset.css?v=Y" />
 <link rel="stylesheet" type="text/css" href="/static/css/layout.css?v=Y" />
 <link rel="stylesheet" type="text/css" href="/static/css/content.css?v=Y" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static/js/top_navi.js"></script>
 <script type="text/javascript" src="/static/js/left_navi.js"></script>
@@ -267,29 +268,47 @@ $(document).ready(function() {
 						</table>
 					</div>
 					<!-- //이전다음글 -->
+					<script>
+						$(function(){
+							// 하단댓글등록
+							$('.replyBtn').click(function(){
+								alert('하단댓글을 등록합니다.');
 
+
+							});//replyBtn
+
+						});//jquery선언
+
+						
+					</script>
 					<!-- 댓글-->
 					<div class="replyWrite">
 						<ul>
 							<li class="in">
-								<p class="txt">총 <span class="orange">3</span> 개의 댓글이 달려있습니다.</p>
-								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" class="replynum" /></p>
-								<textarea class="replyType"></textarea>
+								<p class="txt">총 <span class="orange">{{comment.count}}</span> 개의 댓글이 달려있습니다.</p>
+								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" name='cpw' class="replynum" /></p>
+								<textarea class="replyType replyType1" name='ccontent'></textarea>
 							</li>
-							<li class="btn"><a href="#" class="replyBtn">등록</a></li>
+							<li class="btn"><a class="replyBtn">등록</a></li>
 						</ul>
 						<p class="ntic">※ 비밀번호를 입력하시면 댓글이 비밀글로 등록 됩니다.</p>
 					</div>
 
 					<div class="replyBox">
-						<ul>
-							<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
-							<li class="txt">대박!!! 이거 저한테 완전 필요한 이벤트였어요!!</li>
+						{% if comment %}
+						{% for c in comment %}
+						<ul id='{{c.cno}}'>
+							<li class="name">{{c.member.name}} <span>[ {{c.cdate|date:'Y-m-d  H:i:s'}} ]</span></li>
+							<li class="txt">{{c.ccontent}}</li>
 							<li class="btn">
-								<a href="#" class="rebtn">수정</a>
-								<a href="#" class="rebtn">삭제</a>
+								<a class="rebtn">수정</a>
+								<a class="rebtn">삭제</a>
 							</li>
 						</ul>
+						{% endfor %}
+						{% else %}
+						<ul><li>하단댓글이 없습니다.</li></ul>
+						{% endif %}
 
 						<!-- 하단댓글입력부분 -->
 						<!--
