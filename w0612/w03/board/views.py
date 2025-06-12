@@ -19,7 +19,8 @@ def ajax3(request):
 
 
 def list3(request):
-    qs = Board.objects.all().order_by('-ntchk','-bgroup','bstep')
+    a_query = '-ntchk'
+    qs = Board.objects.all().order_by(a_query,'-bgroup','bstep')
     context = {'list':qs}
     return render(request,'board/list3.html',context)
 

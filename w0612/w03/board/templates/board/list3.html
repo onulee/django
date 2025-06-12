@@ -14,6 +14,10 @@
     </style>
     <script>
         $(function(){
+            
+
+
+
             $('.writeBtn').click(function(){
                 alert("글쓰기를 진행합니다.");
                 id = $('.id').val();
@@ -30,15 +34,30 @@
                     success:function(data){
                         alert('성공');
                         console.log(data);
+                        //json파싱
+                        let jData = JSON.parse(data.board);
+                        console.log(jData[0].pk);
+                        console.log(jData[0].fields.btitle);
 
                         //태그추가
+                        /*
                         let hdata = ``;
                         hdata += `<tr>`;
-                        hdata += `<td>${data.board[0].bno}</td>`;
-                        hdata += `<td>${data.board[0].btitle}</td>`;
-                        hdata += `<td>${data.board[0].id}</td>`;
-                        hdata += `<td>${data.board[0].bhit}</td>`;
-                        hdata += `<td>${data.board[0].bdate}</td>`;
+                            hdata += `<td>${data.board[0].bno}</td>`;
+                            hdata += `<td>${data.board[0].btitle}</td>`;
+                            hdata += `<td>${data.board[0].id}</td>`;
+                            hdata += `<td>${data.board[0].bhit}</td>`;
+                            hdata += `<td>${data.board[0].bdate}</td>`;
+                            hdata += `</tr>`;
+                            $('#tbody').prepend(hdata);
+                            */
+                        let hdata = ``;
+                        hdata += `<tr>`;
+                        hdata += `<td>${jData[0].pk}</td>`;
+                        hdata += `<td>${jData[0].fields.btitle}</td>`;
+                        hdata += `<td>${jData[0].fields.id}</td>`;
+                        hdata += `<td>${jData[0].fields.bhit}</td>`;
+                        hdata += `<td>${jData[0].fields.bdate}</td>`;
                         hdata += `</tr>`;
                         $('#tbody').prepend(hdata);
 
@@ -96,4 +115,28 @@
     </table>
     
 </body>
+<script>
+    cToken = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+                url:'/ajaxData/blist/', 
+                    type:'post',
+                    headers:{'X-CSRFToken':cToken},
+                    data:{'id':'aaa'},
+                    success:function(data){
+                        alert('성공');
+                        console.log(data);
+                        //json파싱
+                        //let jData = JSON.parse(data.board);
+                        //console.log(jData[0].pk);
+                        //console.log(jData[0].fields.btitle);
+
+                        
+                    },
+                    error:function(){
+                        alert('실패');
+                    }
+            });//
+
+</script>
+
 </html>
