@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from board.models import Board
 from django.core import serializers # json타입으로 변경
+from django.views.decorators.csrf import csrf_exempt #csrf토큰이 없을때 예외처리
 
 
 # ajax3 - Board 모든 데이터 가져오기

@@ -16,6 +16,25 @@
         $(function(){
             $('.writeBtn').click(function(){
                 alert("글쓰기를 진행합니다.");
+                id = $('.id').val();
+                btitle = $('.btitle').val();
+                bcontent = $('.bcontent').val();
+                cToken = $('meta[name="csrf-token"]').attr('content');
+                console.log('넘어온 데이터 : ',id,btitle,bcontent,cToken);
+
+                $.ajax({
+                    url:'/ajaxData/bwrite/', 
+                    type:'post',
+                    headers:{'X-CSRFToken':cToken},
+                    data:{'id':id,'btitle':btitle,'bcontent':bcontent},
+                    success:function(data){
+                        alert('성공');
+                        console.log(data);
+                    },
+                    error:function(){
+                        alert('실패');
+                    }
+                });//ajax선언
             });
         });//jquery선언
         
@@ -23,16 +42,13 @@
 </head>
 <body>
     <h2><a href='/'>3. 폼 데이터 - ajax</a></h2>
-    <form action='/board/list3/' method='post' name='writeFrm'>
-        {% csrf_token %}
         <label>아이디</label>
-        <input type='text' name='id' ><br>
+        <input type='text' name='id' class='id' ><br>
         <label>제목</label>
-        <input type='text' name='btitle' ><br>
+        <input type='text' name='btitle' class='btitle' ><br>
         <label>내용</label>
-        <textarea name='bcontent' ></textarea><br>
+        <textarea name='bcontent' class='bcontent' ></textarea><br>
         <input type='button' class='writeBtn' value='전송'>
-    </form>
 
     <table>
         <colgroup>

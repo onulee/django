@@ -3,6 +3,7 @@ from . import views
 
 app_name = 'board'
 urlpatterns = [
+    
     # ajax 전송형태
     path('list3/', views.list3, name='list3'),
     path('ajax3/', views.ajax3, name='ajax3'),
