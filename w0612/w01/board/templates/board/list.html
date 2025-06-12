@@ -14,7 +14,37 @@
     </style>
     <script>
         $(function(){
-            
+            let cToken = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url:'/ajaxData/blist/',
+                type:'post',
+                headers:{'X-CSRFToken':cToken},
+                data:{'sampleId':'aaa'},
+                success:function(data){
+                    alert('성공');
+                    console.log(data); //result,list
+                    console.log(data.list); //list전체
+                    console.log(data.list[0]); //list1개
+                    //data.list - 디장고
+                    // 자바스크립트
+                    hdata = ``;
+                    for(let i=0;i<data.list.length;i++){
+                        hdata += `<tr>
+                                    <td>${data.list[i].bno}</td>
+                                    <td>${data.list[i].btitle}</td>
+                                    <td>${data.list[i].id}</td>
+                                    <td>${data.list[i].bhit}</td>
+                                    <td>${data.list[i].bdate}</td>
+                                </tr>`;
+                    }
+                    $('#tbody').html(hdata);
+
+                },
+                error:function(){
+                    alert('실패');
+                }
+
+            });//ajax선언
         });//jquery선언
 
     </script>
@@ -60,20 +90,6 @@
     
 </body>
 <script>
-    let cToken = $('meta[name="csrf-token"]').attr('content');
-    $.ajax({
-        url:'/ajaxData/blist/',
-        type:'post',
-        headers:{'X-CSRFToken':cToken},
-        data:{'sampleId':'aaa'},
-        success:function(data){
-            alert('성공');
-            console.log(data);
-        },
-        error:function(){
-            alert('실패');
-        }
-
-    });//ajax선언
+    
 </script>
 </html>
