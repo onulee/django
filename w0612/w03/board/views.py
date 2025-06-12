@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from board.models import Board
+from django.core import serializers # json타입으로 변경
+
 
 # ajax3 - Board 모든 데이터 가져오기
 def ajax3(request):
@@ -8,13 +10,17 @@ def ajax3(request):
     print(qs)
     a = request.POST.get('sampleId')
     print('넘어온 데이터 : ',a)
-    context = {'result':'성공'}
+    list_qs = serializers.serialize('json',qs)   
+    print("변경타입 : ",list_qs)
+    context = {'result':'성공','list':list_qs}
     return JsonResponse(context)
 
 
 
 def list3(request):
-    return render(request,'board/list3.html')
+    qs = Board.objects.all().order_by('-ntchk','-bgroup','bstep')
+    context = {'list':qs}
+    return render(request,'board/list3.html',context)
 
 #--------------------------------------------------
 

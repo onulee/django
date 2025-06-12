@@ -14,21 +14,11 @@
     </style>
     <script>
         $(function(){
-            cToken = $('meta[name="csrf-token"]').attr('content')
-            $.ajax({
-                url:'/board/ajax3/',
-                type:'post',
-                headers:{'X-CSRFToken':cToken},
-                data:{'sampleId':'testaaa'},
-                success:function(data){
-                    alert('성공');
-                    console.log(data);
-                },
-                error:function(){
-                    alert('실패');
-                }
-            });//ajax선언
-        });//ajax선언
+            $('.writeBtn').click(function(){
+                alert("글쓰기를 진행합니다.");
+            });
+        });//jquery선언
+        
     </script>
 </head>
 <body>
@@ -41,7 +31,7 @@
         <input type='text' name='btitle' ><br>
         <label>내용</label>
         <textarea name='bcontent' ></textarea><br>
-        <input type='submit' value='전송'>
+        <input type='button' class='writeBtn' value='전송'>
     </form>
 
     <table>
@@ -60,13 +50,15 @@
             <th>작성일</th>
         </tr>
         <tbody id='tbody'>
+            {% for board in list %}
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{board.bno}}</td>
+                <td>{{board.btitle}}</td>
+                <td>{{board.id}}</td>
+                <td>{{board.bhit}}</td>
+                <td>{{board.bdate|date:'Y-m-d H:i:s'}}</td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
     
