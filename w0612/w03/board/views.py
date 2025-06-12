@@ -2,6 +2,17 @@ from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from board.models import Board
 
+# ajax3 - Board 모든 데이터 가져오기
+def ajax3(request):
+    qs = Board.objects.all().order_by('-ntchk','-bgroup','bstep')
+    print(qs)
+    a = request.POST.get('sampleId')
+    print('넘어온 데이터 : ',a)
+    context = {'result':'성공'}
+    return JsonResponse(context)
+
+
+
 def list3(request):
     return render(request,'board/list3.html')
 

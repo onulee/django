@@ -12,6 +12,24 @@
         th,td{height:40px; text-align:center; }
         textarea{width:300px; height:100px;}
     </style>
+    <script>
+        $(function(){
+            cToken = $('meta[name="csrf-token"]').attr('content')
+            $.ajax({
+                url:'/board/ajax3/',
+                type:'post',
+                headers:{'X-CSRFToken':cToken},
+                data:{'sampleId':'testaaa'},
+                success:function(data){
+                    alert('성공');
+                    console.log(data);
+                },
+                error:function(){
+                    alert('실패');
+                }
+            });//ajax선언
+        });//ajax선언
+    </script>
 </head>
 <body>
     <h2><a href='/'>3. 폼 데이터 - ajax</a></h2>
