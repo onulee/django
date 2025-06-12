@@ -15,13 +15,13 @@
     <script>
         $(function(){
             let cToken = $('meta[name="csrf-token"]').attr('content');
+            // 전체게시글 가져오기 ajax
             $.ajax({
                 url:'/ajaxData/blist/',
                 type:'post',
                 headers:{'X-CSRFToken':cToken},
                 data:{'sampleId':'aaa'},
                 success:function(data){
-                    alert('성공');
                     console.log(data); //result,list
                     console.log(data.list); //list전체
                     console.log(data.list[0]); //list1개
@@ -45,6 +45,46 @@
                 }
 
             });//ajax선언
+
+            // 게시글 저장버튼 클릭시
+            $('.writeBtn').click(function(){
+                alert("게시글을 저장합니다.");
+                let id = $('input[name="id"]').val();
+                let btitle = $('input[name="btitle"]').val();
+                let bcontent = $('textarea[name="bcontent"]').val();
+                //ajax전송
+                $.ajax({
+                    url:'/ajaxData/bwrite/',
+                    type:'post',
+                    headers:{'X-CSRFToken':cToken},
+                    data:{'sampleId':'aaa'},
+                    success:function(data){
+                        console.log(data); //result,list
+                        console.log(data.list); //list전체
+                        console.log(data.list[0]); //list1개
+                        //data.list - 디장고
+                        // 자바스크립트
+                        hdata = ``;
+                        for(let i=0;i<data.list.length;i++){
+                            hdata += `<tr>
+                                        <td>${data.list[i].bno}</td>
+                                        <td>${data.list[i].btitle}</td>
+                                        <td>${data.list[i].id}</td>
+                                        <td>${data.list[i].bhit}</td>
+                                        <td>${data.list[i].bdate}</td>
+                                    </tr>`;
+                        }
+                        $('#tbody').html(hdata);
+
+                    },
+                    error:function(){
+                        alert('실패');
+                    }
+                });//ajax선언
+            });
+
+
+
         });//jquery선언
 
     </script>
@@ -59,7 +99,7 @@
         <input type='text' name='btitle' ><br>
         <label>내용</label>
         <textarea name='bcontent' ></textarea><br>
-        <input type='submit' value='전송'>
+        <input type='button' class='writeBtn' value='저장'>
     </form>
 
     <table>
