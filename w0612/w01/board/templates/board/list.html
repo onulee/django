@@ -36,8 +36,8 @@
                                     <td>${data.list[i].bhit}</td>
                                     <td>${data.list[i].bdate}</td>
                                     <td>
-                                        <button class='updateBtn'>수정</button>
-                                        <button class='delBtn'>삭제</button>
+                                        <button data-bno='${data.list[i].bno}' class='updateBtn'>수정</button>
+                                        <button data-bno='${data.list[i].bno}' class='delBtn'>삭제</button>
                                     </td>
                                 </tr>`;
                     }
@@ -73,8 +73,8 @@
                                     <td>${data.board[0].bhit}</td>
                                     <td>${data.board[0].bdate}</td>
                                     <td>
-                                        <button class='updateBtn'>수정</button>
-                                        <button class='delBtn'>삭제</button>
+                                        <button data-bno='${data.list[i].bno}' class='updateBtn'>수정</button>
+                                        <button data-bno='${data.board[0].bno}' class='delBtn'>삭제</button>
                                     </td>
                                 </tr>`;
                         $('#tbody').prepend(hdata);
@@ -89,6 +89,37 @@
                         alert('실패');
                     }
                 });//ajax선언
+            });//writeBtn
+
+            // 게시글 삭제버튼 클릭시
+            $(document).on('click','.delBtn',function(){
+                alert('게시글을 삭제합니다.')
+                console.log($(this).data('bno'));
+                let bno = $(this).data('bno');
+                //ajax전송
+                $.ajax({
+                    url:'/ajaxData/bdelete/',
+                    type:'post',
+                    headers:{'X-CSRFToken':cToken},
+                    data:{'bno':bno},
+                    success:function(data){
+                        alert('성공');
+                        console.log(data);
+                    },
+                    error:function(){
+                        alert('실패');
+                    }
+                });//ajax선언
+
+                //html 데이터 삭제
+                $(`#${bno}`).remove();
+            });//delBtn
+
+            //게시글 수정버튼 클릭시
+            $(document).on('click','.updateBtn',function(){
+                alert('게시글 수정을 실행합니다.');
+                console.log($(this).data('bno'));
+                $('.writeBtn').val('수정저장');
             });
 
 

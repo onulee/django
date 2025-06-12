@@ -2,6 +2,15 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from board.models import Board
 
+# 게시글 삭제
+def bdelete(request):
+    bno = request.POST.get('bno')
+    ## db삭제
+    Board.objects.get(bno=bno).delete()
+    context = {'result':'success'}
+    return JsonResponse(context)
+
+# 게시글 등록
 def bwrite(request):
     id = request.POST.get('id')
     btitle = request.POST.get('btitle')
