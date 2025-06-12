@@ -30,6 +30,23 @@
                     success:function(data){
                         alert('성공');
                         console.log(data);
+
+                        //태그추가
+                        let hdata = ``;
+                        hdata += `<tr>`;
+                        hdata += `<td>${data.board[0].bno}</td>`;
+                        hdata += `<td>${data.board[0].btitle}</td>`;
+                        hdata += `<td>${data.board[0].id}</td>`;
+                        hdata += `<td>${data.board[0].bhit}</td>`;
+                        hdata += `<td>${data.board[0].bdate}</td>`;
+                        hdata += `</tr>`;
+                        $('#tbody').prepend(hdata);
+
+                        // 빈공백처리
+                        $('.id').val('');
+                        $('.btitle').val('');
+                        $('.bcontent').val('');
+
                     },
                     error:function(){
                         alert('실패');
