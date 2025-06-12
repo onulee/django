@@ -12,6 +12,12 @@
         th,td{height:40px; text-align:center; }
         textarea{width:300px; height:100px;}
     </style>
+    <script>
+        $(function(){
+            
+        });//jquery선언
+
+    </script>
 </head>
 <body>
     <h2><a href='/'>ajax게시판</a></h2>
@@ -42,17 +48,32 @@
             <th>작성일</th>
         </tr>
         <tbody id='tbody'>
-            {% for board in list %}
             <tr>
-                <td>{{board.bno}}</td>
-                <td><a href='/board/view/?bno={{board.bno}}&id={{board.id}}'>{{board.btitle}}</a></td>
-                <td>{{board.id}}</td>
-                <td>{{board.bhit}}</td>
-                <td>{{board.bdate|date:'Y-m-d H:i:s'}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
-            {% endfor %}
         </tbody>
     </table>
     
 </body>
+<script>
+    let cToken = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+        url:'/ajaxData/blist/',
+        type:'post',
+        headers:{'X-CSRFToken':cToken},
+        data:{'sampleId':'aaa'},
+        success:function(data){
+            alert('성공');
+            console.log(data);
+        },
+        error:function(){
+            alert('실패');
+        }
+
+    });//ajax선언
+</script>
 </html>

@@ -6,6 +6,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('board/', include('board.urls')),
+    path('ajaxData/', include('ajaxData.urls')),
     path('', include('home.urls')),
 ]
 
