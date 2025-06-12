@@ -29,12 +29,16 @@
                     // 자바스크립트
                     hdata = ``;
                     for(let i=0;i<data.list.length;i++){
-                        hdata += `<tr>
+                        hdata += `<tr id='${data.list[i].bno}'>
                                     <td>${data.list[i].bno}</td>
                                     <td>${data.list[i].btitle}</td>
                                     <td>${data.list[i].id}</td>
                                     <td>${data.list[i].bhit}</td>
                                     <td>${data.list[i].bdate}</td>
+                                    <td>
+                                        <button class='updateBtn'>수정</button>
+                                        <button class='delBtn'>삭제</button>
+                                    </td>
                                 </tr>`;
                     }
                     $('#tbody').html(hdata);
@@ -57,24 +61,28 @@
                     url:'/ajaxData/bwrite/',
                     type:'post',
                     headers:{'X-CSRFToken':cToken},
-                    data:{'sampleId':'aaa'},
+                    data:{'id':id,'btitle':btitle,'bcontent':bcontent},
                     success:function(data){
-                        console.log(data); //result,list
-                        console.log(data.list); //list전체
-                        console.log(data.list[0]); //list1개
-                        //data.list - 디장고
+                        console.log(data.board); //result,list
                         // 자바스크립트
                         hdata = ``;
-                        for(let i=0;i<data.list.length;i++){
-                            hdata += `<tr>
-                                        <td>${data.list[i].bno}</td>
-                                        <td>${data.list[i].btitle}</td>
-                                        <td>${data.list[i].id}</td>
-                                        <td>${data.list[i].bhit}</td>
-                                        <td>${data.list[i].bdate}</td>
-                                    </tr>`;
-                        }
-                        $('#tbody').html(hdata);
+                        hdata += `<tr id='${data.board[0].bno}'>
+                                    <td>${data.board[0].bno}</td>
+                                    <td>${data.board[0].btitle}</td>
+                                    <td>${data.board[0].id}</td>
+                                    <td>${data.board[0].bhit}</td>
+                                    <td>${data.board[0].bdate}</td>
+                                    <td>
+                                        <button class='updateBtn'>수정</button>
+                                        <button class='delBtn'>삭제</button>
+                                    </td>
+                                </tr>`;
+                        $('#tbody').prepend(hdata);
+
+                        // 입력된 데이터 삭제
+                        $('input[name="id"]').val('');
+                        $('input[name="btitle"]').val('');
+                        $('textarea[name="bcontent"]').val('');
 
                     },
                     error:function(){
@@ -109,6 +117,7 @@
            <col width='12%'>
            <col width='12%'>
            <col width='12%'>
+           <col width='12%'>
         </colgroup>
         <tr>
             <th>번호</th>
@@ -116,6 +125,7 @@
             <th>작성자</th>
             <th>조회수</th>
             <th>작성일</th>
+            <th>버튼</th>
         </tr>
         <tbody id='tbody'>
             <tr>
@@ -124,6 +134,10 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td>
+                    <button class='updateBtn'>수정</button>
+                    <button class='delBtn'>삭제</button>
+                </td>
             </tr>
         </tbody>
     </table>
