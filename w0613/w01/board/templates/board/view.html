@@ -205,6 +205,7 @@
 
 							$('.replyBtn').click(function(){
 								alert('하단댓글을 등록합니다.');
+								let bno = '{{board.bno}}';
 								let cpw = $('.replynum').val();
 								let ccontent = $('.replyTxt').val();
 
@@ -213,10 +214,28 @@
 									url:'/comment/cwrite/',
 									type:'post',
 									headers:{'X-CSRFToken':cToken},
-									data:{'id':'aaa','cpw':cpw,'ccontent':ccontent},
+									data:{'id':'aaa','cpw':cpw,'ccontent':ccontent,'bno':bno},
 									success:function(data){
 										alert('성공');
 										console.log(data);
+
+										//하단댓글리스트에 추가 html
+										let hdata = ``;
+										hdata += `<ul>
+													<li class="name">${data.comment[0].member_id} <span>[ ${data.comment[0].cdate} ]</span></li>
+													<li class="txt">${data.comment[0].ccontent}</li>
+													<li class="btn">
+														<a class="rebtn updateBtn">수정</a>
+														<a class="rebtn deleteBtn">삭제</a>
+													</li>
+												</ul>`;
+										// html 태그 추가		
+										$('.replyBox').prepend(hdata);
+
+										// 총개수 1추가
+										let ccount = Number($('.ccount').text())+1
+										$('.ccount').text(ccount);
+
 									},
 									error:function(){
 										alert('실패');
@@ -224,11 +243,17 @@
 
 								});//ajax선언
 
-
 								// 데이터 삭제
 								$('.replynum').val('');
 								$('.replyTxt').val('');
 							});//replyBtn버튼
+
+							$(document).on('click','.deleteBtn',function(){
+								alert('하단댓글을 삭제합니다.');
+								console.log($(this).data('bno'));
+							});
+
+
 						});//jquery선언
 					</script>
 
@@ -236,7 +261,7 @@
 					<div class="replyWrite">
 						<ul>
 							<li class="in">
-								<p class="txt">총 <span class="orange">{{clist.count}}</span> 개의 댓글이 달려있습니다.</p>
+								<p class="txt">총 <span class="orange ccount">{{clist.count}}</span> 개의 댓글이 달려있습니다.</p>
 								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" class="replynum" /></p>
 								<textarea class="replyType replyTxt"></textarea>
 							</li>
@@ -251,8 +276,8 @@
 							<li class="name">{{c.member.id}} <span>[ {{c.cdate|date:'Y-m-d H:i:s'}} ]</span></li>
 							<li class="txt">{{c.ccontent}}</li>
 							<li class="btn">
-								<a href="#" class="rebtn">수정</a>
-								<a href="#" class="rebtn">삭제</a>
+								<a class="rebtn updateBtn">수정</a>
+								<a class="rebtn deleteBtn" data-bno='{{c.cno}}'>삭제</a>
 							</li>
 						</ul>
 						{% endfor %}
