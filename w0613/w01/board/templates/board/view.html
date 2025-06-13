@@ -221,12 +221,12 @@
 
 										//하단댓글리스트에 추가 html
 										let hdata = ``;
-										hdata += `<ul>
+										hdata += `<ul id='${data.comment[0].cno}'>
 													<li class="name">${data.comment[0].member_id} <span>[ ${data.comment[0].cdate} ]</span></li>
 													<li class="txt">${data.comment[0].ccontent}</li>
 													<li class="btn">
 														<a class="rebtn updateBtn">수정</a>
-														<a class="rebtn deleteBtn">삭제</a>
+														<a class="rebtn deleteBtn" data-cno="${data.comment[0].cno}">삭제</a>
 													</li>
 												</ul>`;
 										// html 태그 추가		
@@ -248,10 +248,25 @@
 								$('.replyTxt').val('');
 							});//replyBtn버튼
 
+							// 삭제버튼 클릭시
 							$(document).on('click','.deleteBtn',function(){
 								alert('하단댓글을 삭제합니다.');
-								console.log($(this).data('bno'));
-							});
+								console.log("하단댓글 번호 : ",$(this).data('cno'));
+								let cno = $(this).data('cno');
+								// html에서 디장고로 데이터전송
+								$.ajax({
+									url:'/comment/cdelete/',
+									type:'post',
+									headers:{'X-CSRFToken':cToken},
+									data:{'cno':cno},
+									success:function(data){
+										alert('성공');
+									},
+									error:function(){
+										alert('실패');
+									}
+								});//ajax선언
+							});//deleteBtn
 
 
 						});//jquery선언
@@ -272,12 +287,12 @@
 
 					<div class="replyBox">
 						{% for c in clist %}
-						<ul>
+						<ul id='{{c.cno}}'>
 							<li class="name">{{c.member.id}} <span>[ {{c.cdate|date:'Y-m-d H:i:s'}} ]</span></li>
 							<li class="txt">{{c.ccontent}}</li>
 							<li class="btn">
 								<a class="rebtn updateBtn">수정</a>
-								<a class="rebtn deleteBtn" data-bno='{{c.cno}}'>삭제</a>
+								<a class="rebtn deleteBtn" data-cno='{{c.cno}}'>삭제</a>
 							</li>
 						</ul>
 						{% endfor %}

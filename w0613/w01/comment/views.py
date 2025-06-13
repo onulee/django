@@ -4,6 +4,15 @@ from comment.models import Comment
 from member.models import Member
 from board.models import Board
 
+## 하단댓글 삭제
+def cdelete(request):
+    cno = request.POST.get('cno')
+    print('넘어온 cno : ',cno)
+    context = {'result':'success'}
+    return JsonResponse(context)
+
+
+
 ## 하단등록 - Json타입리턴
 def cwrite(request):
     # html에서 디장고로 데이터 전달
