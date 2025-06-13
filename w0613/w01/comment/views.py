@@ -8,6 +8,9 @@ from board.models import Board
 def cdelete(request):
     cno = request.POST.get('cno')
     print('넘어온 cno : ',cno)
+    # db삭제
+    Comment.objects.get(cno=cno).delete()
+    
     context = {'result':'success'}
     return JsonResponse(context)
 

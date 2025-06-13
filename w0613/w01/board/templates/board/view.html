@@ -216,7 +216,6 @@
 									headers:{'X-CSRFToken':cToken},
 									data:{'id':'aaa','cpw':cpw,'ccontent':ccontent,'bno':bno},
 									success:function(data){
-										alert('성공');
 										console.log(data);
 
 										//하단댓글리스트에 추가 html
@@ -250,23 +249,48 @@
 
 							// 삭제버튼 클릭시
 							$(document).on('click','.deleteBtn',function(){
-								alert('하단댓글을 삭제합니다.');
-								console.log("하단댓글 번호 : ",$(this).data('cno'));
-								let cno = $(this).data('cno');
-								// html에서 디장고로 데이터전송
-								$.ajax({
-									url:'/comment/cdelete/',
-									type:'post',
-									headers:{'X-CSRFToken':cToken},
-									data:{'cno':cno},
-									success:function(data){
-										alert('성공');
-									},
-									error:function(){
-										alert('실패');
-									}
-								});//ajax선언
+								if(confirm('하단댓글을 삭제하시겠습니까?')){
+									console.log("하단댓글 번호 : ",$(this).data('cno'));
+									let cno = $(this).data('cno');
+									// html에서 디장고로 데이터전송
+									$.ajax({
+										url:'/comment/cdelete/',
+										type:'post',
+										headers:{'X-CSRFToken':cToken},
+										data:{'cno':cno},
+										success:function(data){
+											//하단댓글html삭제
+											$(`#${cno}`).remove();
+											//총개수 1감소
+											let ccount = Number($('.ccount').text())-1
+											$('.ccount').text(ccount);
+										},
+										error:function(){
+											alert('실패');
+										}
+									});//ajax선언
+								}//if
 							});//deleteBtn
+
+							//수정버튼 클릭시 수정페이지 호출
+							$(document).on('click','.updateBtn',function(){
+								alert('댓글 수정을 진행합니다.');
+								console.log($(this).closest('ul').attr('id'));
+								let cno = $(this).closest('ul').attr('id');
+								let hdata = `
+										<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
+										<li class="txt"><textarea class="replyType"></textarea></li>
+										<li class="btn">
+											<a href="#" class="rebtn">저장</a>
+											<a href="#" class="rebtn">취소</a>
+										</li>
+									`;
+
+								$(`#${cno}`).html(hdata);
+
+
+
+							});
 
 
 						});//jquery선언
@@ -291,7 +315,7 @@
 							<li class="name">{{c.member.id}} <span>[ {{c.cdate|date:'Y-m-d H:i:s'}} ]</span></li>
 							<li class="txt">{{c.ccontent}}</li>
 							<li class="btn">
-								<a class="rebtn updateBtn">수정</a>
+								<a class="rebtn updateBtn" data-cno='{{c.cno}}'>수정</a>
 								<a class="rebtn deleteBtn" data-cno='{{c.cno}}'>삭제</a>
 							</li>
 						</ul>
@@ -307,16 +331,9 @@
 							</ul>
 						-->
 						<!-- 수정부분 -->
-						<!--
-							<ul>
-								<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
-								<li class="txt"><textarea class="replyType"></textarea></li>
-								<li class="btn">
-									<a href="#" class="rebtn">저장</a>
-									<a href="#" class="rebtn">취소</a>
-								</li>
-							</ul>
-						--> 
+						
+							
+						
 
 					</div>
 					<!-- //댓글 -->
