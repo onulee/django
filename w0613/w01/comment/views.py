@@ -4,6 +4,20 @@ from comment.models import Comment
 from member.models import Member
 from board.models import Board
 
+## 하단댓글 수정저장
+def cupdate(request):
+    cno = request.POST.get('cno')
+    ccontent = request.POST.get('ccontent')
+    print('넘어온 cno : ',cno,ccontent)
+    # db수정저장
+    qs = Comment.objects.get(cno=cno)
+    qs.ccontent = ccontent
+    qs.save()
+    # json타입으로 변경
+    json_qs = list(Comment.objects.filter(cno=cno).values())
+    context = {'result':'success','comment':json_qs} 
+    return JsonResponse(context)
+
 ## 하단댓글 삭제
 def cdelete(request):
     cno = request.POST.get('cno')
@@ -13,7 +27,6 @@ def cdelete(request):
     
     context = {'result':'success'}
     return JsonResponse(context)
-
 
 
 ## 하단등록 - Json타입리턴
