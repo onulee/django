@@ -208,6 +208,7 @@
 							let ccontent;
 							let cno;
 
+							// 하단댓글 등록
 							$('.replyBtn').click(function(){
 								alert('하단댓글을 등록합니다.');
 								let bno = '{{board.bno}}';
@@ -326,6 +327,45 @@
 								// 수정화면 닫힘
 								temp = 0;
 							});//cancelBtn
+
+							// 수정저장 버튼 클릭
+							$(document).on('click','.saveBtn',function(){
+								alert('수정된 댓글을 저장합니다.');
+								// 수정된 내용 가져오기
+								let update_c = $(this).closest('ul').children('.txt').children('.replyType').val();
+								console.log('변경된 내용 : ',update_c);
+								// 변경내용 디장고 전송
+								$.ajax({
+									url:'/comment/cupdate/',
+									type:'post',
+									headers:{'X-CSRFToken':cToken},
+									data:{'ccontent':update_c,'cno':cno},
+									success:function(data){
+										console.log(data);
+
+										//하단댓글리스트에 추가 html
+										let hdata=``;
+										hdata += `<li class="name">${id} <span>${data.comment[0].cdate}</span></li>
+												<li class="txt">${update_c}</li>
+												<li class="btn">
+													<a class="rebtn updateBtn">수정</a>
+													<a class="rebtn deleteBtn" data-cno="${cno}">삭제</a>
+												</li>`;
+										$(`#${cno}`).html(hdata);
+
+										// 총개수 1추가
+										let ccount = Number($('.ccount').text())+1
+										$('.ccount').text(ccount);
+
+									},
+									error:function(){
+										alert('실패');
+									}
+								});//ajax선언
+								
+								//수정화면 닫힘.
+								temp = 0;
+							});//saveBtn
 
 
 						});//jquery선언
