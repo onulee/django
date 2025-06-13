@@ -90,7 +90,9 @@ $(document).ready(function() {
 	<div id="header">
 		
 		<div id="snbBox">
-			<h1><img src="/static/images/txt/logo.gif" alt="JARDIN SHOP" /></h1>
+			<a href='/'>
+				<h1><img src="/static/images/txt/logo.gif" alt="JARDIN SHOP" /></h1>
+			</a>
 			<div id="quickmenu">
 				<div id="mnaviOpen"><img src="/static/images/btn/btn_mnavi.gif" width="33" height="31" alt="메뉴열기" /></div>
 				<div id="mnaviClose"><img src="/static/images/btn/btn_mnavi_close.gif" width="44" height="43" alt="메뉴닫기" /></div>
@@ -218,105 +220,28 @@ $(document).ready(function() {
 							<col width="10%" class="tnone" />
 							<col width="*" />
 							<col width="14%" class="tw25" />
+							<col width="14%" class="tw25" />
 							<col width="14%" class="tnone" />
 							</colgroup>
 							<thead>
 								<th scope="col" class="tnone">NO.</th>
 								<th scope="col">제목</th>
+								<th scope="col">작성자</th>
 								<th scope="col">등록일</th>
 								<th scope="col" class="tnone">조회수</th>
 							</thead>
 							<tbody>
+								{% for board in list %}
 								<tr>
-									<td class="tnone">1</td>
+									<td class="tnone">{{board.bno}}</td>
 									<td class="left">
-										<a href="#">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-										<img src="/static/images/ico/ico_new.gif" alt="NEW" />
+										<a href="/board/view/{{board.bno}}/">{{board.btitle}}</a>
 									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
+									<td>{{board.id}}</td>
+									<td>{{board.bdate|date:'Y-m-d'}}</td>
+									<td class="tnone right">{{board.bhit}}</td>
 								</tr>
-
-								<tr>
-									<td class="tnone">2</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">3</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">4</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">5</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">6</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">7</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">8</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">9</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">10</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
+								{% endfor %}
 							</tbody>
 						</table>
 					</div>
