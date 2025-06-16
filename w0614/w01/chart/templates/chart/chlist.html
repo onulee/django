@@ -224,6 +224,8 @@ $(document).ready(function() {
 							
 							const ctx = document.getElementById('myChart');
 							console.log('영업이익 : ','{{profit}}');
+							console.log('qs : ','{{list}}');
+							console.log('qs.values : ','{{list_list}}');
 							new Chart(ctx, {
 								type: 'bar',
 								data: {
