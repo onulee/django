@@ -315,9 +315,18 @@ $(document).ready(function() {
 													alert('실패');
 												}
 											})
-											
-
 										});//idchkBtn
+
+										// 비밀번호,비밀번호확인
+										$('input[name="pw2"]').keyup(function(){
+											if($('input[name="pw"]').val() == $('input[name="pw2"]').val()){
+												$('.pwchk').html(`<span class="mvalign black">* 비밀번호가 일치입니다.</span>`)
+											}else{
+												$('.pwchk').html(`<span class="mvalign orange">* 비밀번호가 일치하지 않습니다.</span>`)
+											}
+										});//비밀번호확인체크
+
+
 									});//jquery선언
 								</script>
 								<tr>
@@ -345,9 +354,9 @@ $(document).ready(function() {
 									<td>
 										<ul class="pta">
 											<li class="r10"><input type="password" class="w134" name='pw2' /></li>
-											<li>
-												<span class="mvalign black">* 비밀번호가 일치입니다.</span>
-												<span class="mvalign orange">* 비밀번호가 일치하지 않습니다.</span>
+											<li class='pwchk'>
+												
+												
 											</li>
 										</ul>
 									</td>
