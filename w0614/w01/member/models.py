@@ -8,6 +8,7 @@ class Member(models.Model):
     emailc = models.IntegerField(default=0)
     address1 = models.CharField(max_length=300)
     address2 = models.CharField(max_length=300)
+    address3 = models.CharField(max_length=300,null=True,blank=True)
     phone = models.CharField(max_length=50,default='010-0000-0000')
     tel = models.CharField(max_length=50,default='02-0000-0000')
     birth = models.CharField(max_length=20)

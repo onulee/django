@@ -11,8 +11,9 @@
 <link rel="stylesheet" type="text/css" href="/static/css/reset.css?v=Y" />
 <link rel="stylesheet" type="text/css" href="/static/css/layout.css?v=Y" />
 <link rel="stylesheet" type="text/css" href="/static/css/content.css?v=Y" />
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static/js/top_navi.js"></script>
+<script type="text/javascript" src="/static/js/left_navi.js"></script>
 <script type="text/javascript" src="/static/js/main.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/jquery.easing.1.3.js"></script>
@@ -25,69 +26,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	var mySwiper = new Swiper('#mainRoll',{
-		pagination: '#mainThum',
-		paginationClickable: true,
-		slidesPerView: 1,
-		loop: true,
-		autoplay:5000
-	});
-
-	var mySwiper2 = new Swiper('#bestseller',{
-		paginationClickable: true,
-		slidesPerView: 3,
-		loop: true,
-		autoplay:3000
-	});
-
-	var mySwiper3 = new Swiper('#mainSale',{
-		paginationClickable: true,
-		slidesPerView: 5,
-		loop: true,
-		autoplay:3000
-	});
-	
-	$(window).bind('resize', function() {
-		rollwidth();	
-	});
-
-	function rollwidth(){
-		var winWidth = $(window).width();
-		if(winWidth < 768){
-			mySwiper2.params.slidesPerView = 1;
-			mySwiper3.params.slidesPerView = 2;
-		}else{
-			mySwiper2.params.slidesPerView = 3;
-			mySwiper3.params.slidesPerView = 5;
-		}
-	}
-	$('.arrowLeft').bind('click', function(e){
-		e.preventDefault()
-		mySwiper2.swipePrev()
-	});
-	$('.arrowRight').bind('click', function(e){
-		e.preventDefault()
-		mySwiper2.swipeNext()
-	});
-
-	$('.saleLeft').bind('click', function(e){
-		e.preventDefault()
-		mySwiper3.swipePrev()
-	});
-	$('.saleRight').bind('click', function(e){
-		e.preventDefault()
-		mySwiper3.swipeNext()
-	});
-
-	rollwidth();
-
-
-	var myWish = new Swiper('#wishList',{
-		paginationClickable: true,
-		slidesPerView: 3,
-		loop: true,
-		autoplay:3000
-	});
 
 
 });
@@ -152,14 +90,11 @@ $(document).ready(function() {
 	<div id="header">
 		
 		<div id="snbBox">
-			<a href='/'>
-				<h1><img src="/static/images/txt/logo.gif" alt="JARDIN SHOP" /></h1>
-			</a>
+			<h1><img src="/static/images/txt/logo.gif" alt="JARDIN SHOP" /></h1>
 			<div id="quickmenu">
 				<div id="mnaviOpen"><img src="/static/images/btn/btn_mnavi.gif" width="33" height="31" alt="메뉴열기" /></div>
 				<div id="mnaviClose"><img src="/static/images/btn/btn_mnavi_close.gif" width="44" height="43" alt="메뉴닫기" /></div>
 				<ul>
-					<li><a href="/chart/chlist/">CHART</a></li>
 					<li><a href="#">EVENT</a></li>
 					<li><a href="#">CUSTOMER</a></li>
 					<li><a href="#">COMMUNITY</a></li>
@@ -167,11 +102,10 @@ $(document).ready(function() {
 			</div>
 			<div id="snb">
 				<ul>
-					<li><a href="/member/login/">LOGIN</a></li>
-					<li><a href="/member/step01/">JOIN</a></li>
+					<li><a href="#">LOGIN</a></li>
+					<li><a href="#">JOIN</a></li>
 					<li><a href="#">MY PAGE</a></li>
 					<li><a href="#">CART</a></li>
-					<li><a href="/admin/">ADMIN</a></li>
 				</ul>
 
 				<div id="search">
@@ -249,11 +183,66 @@ $(document).ready(function() {
 	</div>
 	<!-- //GNB -->
 
-	<!-- mainSection -->
-	{% block content %} 
+	<!-- container -->
+	<div id="container">
 
-	{% endblock content %}
-	<!-- //mainSection -->
+		<div id="location">
+			<ol>
+				<li><a href="#">HOME</a></li>
+				<li><a href="#">CUSTOMER</a></li>
+				<li class="last">NOTICE</li>
+			</ol>
+		</div>
+		
+		<div id="outbox">		
+			<div id="left">
+				<div id="title2">CUSTOMER<span>고객센터</span></div>
+				<ul>	
+					<li><a href="#" id="leftNavi1">NOTICE</a></li>
+					<li><a href="#" id="leftNavi2">1:1문의</a></li>
+					<li><a href="#" id="leftNavi3">FAQ</span></a></li>
+					<li class="last"><a href="#" id="leftNavi4">이용안내</a></li>
+				</ul>			
+			</div><script type="text/javascript">initSubmenu(1,0);</script>
+
+
+			<!-- contents -->
+			<div id="contents">
+				<div id="customer">
+					<h2><strong>CHART</strong><span>쟈뎅샵 소식을 전해드립니다.</span></h2>
+					
+					<div class="orderDivMt">
+						
+					</div>
+						
+
+
+					
+					<div class="searchWrap">
+						<div class="search">
+							<ul>
+								<li class="web"><img src="/static/images/txt/txt_search.gif" alt="search" /></li>
+								<li class="se">
+									<select>
+										<option value="" />제목</option>
+									</select>
+								</li>
+								<li><input type="text" class="searchInput" /></li>
+								<li class="web"><a href="#"><img src="/static/images/btn/btn_search.gif" alt="검색" /></a></li>
+								<li class="mobile"><a href="#"><img src="/static/images/btn/btn_search_m.gif" alt="검색" /></a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- //포토 구매후기 -->
+
+
+				</div>
+			</div>
+			<!-- //contents -->
+
+		</div>
+	</div>
+	<!-- //container -->
 
 
 

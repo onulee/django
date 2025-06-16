@@ -251,8 +251,12 @@ $(document).ready(function() {
 					<script>
 						//회원가입부분
 						function memberBtn(){
-							alert("회원가입을 진행합니다.");
-							//유효성검사후, 회원정보저장.
+							if($('input[name="name"]').val().length<2){
+								alert('이름을 입력하셔야 회원가입이 가능합니다.');
+								$('input[name="name"]').focus();
+								return;
+							}
+							
 							memberFrm.submit();
 						}
 
@@ -289,6 +293,7 @@ $(document).ready(function() {
 										//전역변수
 										let cToken = $('meta[name="csrf-token"]').attr('content');
 
+										
 										
 
 										// idchk 함수선언
