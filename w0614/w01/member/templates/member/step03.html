@@ -289,7 +289,10 @@ $(document).ready(function() {
 										//전역변수
 										let cToken = $('meta[name="csrf-token"]').attr('content');
 
-										$(".idchkBtn").click(function(){
+										
+
+										// idchk 함수선언
+										let idchk_ajax = function(){
 											let id = $('input[name="id"]').val()
 											console.log('아이디 : ',id);
 											
@@ -313,8 +316,18 @@ $(document).ready(function() {
 												error:function(){
 													alert('실패');
 												}
-											})
-										});//idchkBtn
+											})//ajax선언
+										}
+
+										// 중복확인 버튼 - 함수재사용
+										$(".idchkBtn").click(idchk_ajax);//idchkBtn
+
+										// 아이디 입력창 enter키 입력시 - 함수재사용
+										$('input[name="id"]').keyup(function(key){
+											if(key.keyCode == 13){
+												 idchk_ajax();
+											}//if
+										});//input[name="id"]
 
 										// 비밀번호,비밀번호확인
 										$('input[name="pw2"]').keyup(function(){
@@ -336,11 +349,12 @@ $(document).ready(function() {
 											}
 										});//이메일체크
 
+										//다음주소 api
 										$('.addressBtn').click(function(){
 											new daum.Postcode({
 												oncomplete: function(data) {
-													// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-													// 예제를 참고하여 다양한 활용법을 확인해 보세요.
+													$('input[name="address1"]').val(data.zonecode);
+													$('input[name="address2"]').val(data.address);
 												}
 											}).open();
 
@@ -424,6 +438,7 @@ $(document).ready(function() {
 											</li>
 											<li><a class="addressBtn"><span>우편번호 찾기</span></a></li>
 											<li class="pt5"><input type="text" name='address2' class="addressType" /></li>
+											<li class="pt5"><input type="text" name='address3' class="addressType" /></li>
 											<li class="cb">
 												<span class="mvalign">※ 상품 배송 시 받으실 주소입니다. 주소를 정확히 적어 주세요.</span>
 											</li>
