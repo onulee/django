@@ -74,14 +74,19 @@
 							<tbody>
 								<tr>
 									<th scope="row"><span>이름 *</span></th>
-									<td>김슬기</td>
+									<td>
+										<ul class="pta">
+											<li class="r10"><input type="text" class="w134" name='name' /></li>
+										</ul>
+									</td>
 								</tr>
 								<tr>
 									<th scope="row"><span>아이디 *</span></th>
 									<td>
 										<ul class="pta">
 											<li class="r10"><input type="text" class="w134" /></li>
-											<li><a href="#" class="nbtnMini">중복확인</a></li>
+											<li><a href="#" class="nbtnMini">중복확인</a></li> 
+											<li class="pt5"><span class="mvalign orange">아이디를 사용할수 있습니다. 아이디를 사용할수 없습니다.</span></li>
 											<li class="pt5"><span class="mvalign">첫 글자는 영문으로 4~16자 까지 가능, 영문, 숫자와 특수기호(_)만 사용 가능</span></li>
 										</ul>
 									</td>
@@ -317,6 +322,50 @@
 										</ul>
 									</td>
 								</tr>
+
+								<!-- 성별 -->
+								<tr>
+									<th scope="row"><span>성별</span></th>
+									<td>
+										<ul class="pta">
+											<li>
+												<ul class="baseQues">
+													<li>
+														<input type="radio" name="gender" id="male" class="radio_t" value='남자' /><label for="male">남자</label>
+													</li>
+													<li>
+														<input type="radio" name="gender" id="female" class="radio_t" value='여자' checked="checked"/><label for="female">여자</label>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><span>취미</span></th>
+									<td>
+										<ul class="pta">
+											<li>
+												<ul class="baseQues">
+													<li>
+														<input type="checkbox" name="hobby" id="game" class="radio_t" value='게임' /><label for="game">게임</label>
+													</li>
+													<li>
+														<input type="checkbox" name="hobby" id="golf" class="radio_t" value='골프'/><label for="golf">골프</label>
+													</li>
+													<li>
+														<input type="checkbox" name="hobby" id="swim" class="radio_t" value='수영' /><label for="swim">수영</label>
+													</li>
+													<li>
+														<input type="checkbox" name="hobby" id="run" class="radio_t" value='조깅'/><label for="run">조깅</label>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</td>
+								</tr> 
+
+
 							</tbody>
 							</table>
 						</div>
