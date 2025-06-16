@@ -223,14 +223,14 @@ $(document).ready(function() {
 							alert("차트를 출력합니다.");
 							
 							const ctx = document.getElementById('myChart');
-
+							console.log('영업이익 : ','{{profit}}');
 							new Chart(ctx, {
 								type: 'bar',
 								data: {
 								labels: ['1월', '2월', '3월', '4월', '5월', '6월'],
 								datasets: [{
 									label: '2025년 월별 매출액',
-									data: [12, 19, 3, 5, 2, 3],
+									data: {{profit}},
 									borderWidth: 1
 								}]
 								},
