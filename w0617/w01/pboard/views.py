@@ -2,12 +2,16 @@ from django.shortcuts import render
 import requests
 import json
 
+### 전역변수
+dlist = []
+
 # 공공데이터 상세보기 - 공공데이터 다시 호출
 def view(request,galContentId):
+    global dlist
     print('넘어온 galContentId : ',galContentId)
+    print('넘어온 dlist : ',dlist)
     # 공공데이터 호출
-    dlist = publicData()
-    dData = {}
+    # dlist = publicData()
     for d in dlist:
         if d['galContentId'] == str(galContentId): # 타입확인
             dData = d
@@ -19,6 +23,7 @@ def view(request,galContentId):
 
 # 공공데이터 리스트
 def list(request):
+    global dlist
     dlist = publicData()
     context = {'list':dlist}
     return render(request,'pboard/list.html',context)
