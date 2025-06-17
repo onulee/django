@@ -160,12 +160,15 @@
 						</div> 
 					</div>
 					<script>
-							
-							let cToken = $('meta[name="csrf-token"]').attr('content');
-							let tSales = []; //월별매출액
-							let mon = [];    //월별이름
-							let pro = [];    //월별영업이익
-							console.log('cToken',cToken);
+						//전역변수
+						let cToken = $('meta[name="csrf-token"]').attr('content');
+						let tSales = []; //월별매출액
+						let mon = [];    //월별이름
+						let pro = [];    //월별영업이익
+						console.log('cToken',cToken);
+
+						
+						function ajaxFunc(){
 							$.ajax({
 								url:'/chart/chajax/',
 								type:'post',
@@ -212,7 +215,13 @@
 									alert('실패');
 								}
 							});//ajax선언
+						}
 							
+							
+							function chartBtn(){
+								alert('검색을 시작합니다.');
+								console.log($('.searchInput').val());
+							}
 					</script>
 					<div class="searchWrap">
 						<div class="search">
