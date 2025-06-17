@@ -2,6 +2,15 @@ from django.shortcuts import render
 import requests
 import json
 
+list = []
+
+# 공공데이터 상세보기
+def view(request,galContentId):
+    print('넘어온 galContentId : ',galContentId)
+    print('공공데이터 리스트 : ',list)
+    return render(request,'pboard/view.html')
+
+
 # 공공데이터 리스트
 def list(request):
     public_key = '918RE13GA7OY7ZEmUzApgbOeAcQoZ%2FaHsXWcqPAKQ9YNNPj83KOstRMRIUrCFIAcm9qj2R6b7NFZjp%2FYsYzJLg%3D%3D'
@@ -13,9 +22,9 @@ def list(request):
     
     # 문자열 -> json타입으로 변경
     json_data = json.loads(response.text)
-    data10 = json_data['response']['body']['items']['item'];
+    list = json_data['response']['body']['items']['item'];
     print('json데이터 : ',json_data['response']['body']['items']['item'])     # json타입
     print('json데이터 1개 : ',json_data['response']['body']['items']['item'][0])
-    context = {'list':data10}
+    context = {'list':list}
     return render(request,'pboard/list.html',context)
     
