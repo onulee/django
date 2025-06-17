@@ -2,6 +2,10 @@ from django.shortcuts import render
 from chart.models import TotalSales
 from django.http import JsonResponse
 
+def chlist2(request):
+    return render(request,'chart/chlist2.html')
+
+
 # ajax으로 json타입으로 리턴
 def chajax(request):
     # db불러오기 - 하단댓글때 qs list타입변경
