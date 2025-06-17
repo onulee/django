@@ -166,15 +166,19 @@
 						let mon = [];    //월별이름
 						let pro = [];    //월별영업이익
 						console.log('cToken',cToken);
-
 						
-						function ajaxFunc(){
+						// 년도별 ajax데이터 가져오기
+						function ajaxFunc(aYear){
 							$.ajax({
 								url:'/chart/chajax/',
 								type:'post',
 								headers:{'X-CSRFToken':cToken},
-								data:{'test':'aaa'},
+								data:{'aYear':aYear},
 								success:function(data){
+									// 변수초기화
+									tSales = []; //월별매출액
+									mon = [];    //월별이름
+									pro = [];    //월별영업이익
 									alert('성공');
 									console.log('넘어온데이터 : ',data);
 									for(let i=0;i<data.ajaxlist.length;i++){
@@ -187,6 +191,13 @@
 									console.log('월별이름 : ',mon);
 									console.log('월별영업이익 : ',pro);
 									//-- 차트그리기
+									// 차트 초기화
+									let charts = Chart.getChart('myChart');
+									// 처음사용이 아니면
+									if (charts != undefined){
+										charts.destroy(); //삭제
+									}
+									
 									const ctx = document.getElementById('myChart');
 
 									new Chart(ctx, {
@@ -215,13 +226,24 @@
 									alert('실패');
 								}
 							});//ajax선언
+						}//ajaxFunc
+						
+						
+						function chartBtn(){
+							alert('검색을 시작합니다.');
+							let aYear = $('.searchInput').val();
+							console.log('년도 : ',aYear);
+							//ajaxFunc()호출
+							ajaxFunc(aYear);
 						}
-							
-							
-							function chartBtn(){
-								alert('검색을 시작합니다.');
-								console.log($('.searchInput').val());
-							}
+
+						$(function(){
+							$('.searchInput').keyup(function(key){
+								if(key.keyCode==13){
+									chartBtn();
+								}
+							});
+						});//제이쿼리
 					</script>
 					<div class="searchWrap">
 						<div class="search">
@@ -232,7 +254,7 @@
 										<option value="" />제목</option>
 									</select>
 								</li>
-								<li><input type="text" class="searchInput" /></li>
+								<li><input type="text" class="searchInput"  /></li>
 								<li class="web"><a onclick='chartBtn()'><img src="/static/images/btn/btn_search.gif" alt="검색" /></a></li>
 								<li class="mobile"><a href="#"><img src="/static/images/btn/btn_search_m.gif" alt="검색" /></a></li>
 							</ul>
