@@ -5,6 +5,7 @@
 <title> JARDIN SHOP </title>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name='csrf-token' content={{ csrf_token }} />
 <meta name="description" content="JARDIN SHOP" />
 <meta name="keywords" content="JARDIN SHOP" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scaleable=no" />
@@ -221,11 +222,43 @@ $(document).ready(function() {
 					</div>
 					<script>
 							alert("차트를 출력합니다.");
-							
+							let cToken = $('meta[name="csrf-token"]').attr('content');
+							let tSales = []; //월별매출액
+							let mon = [];    //월별이름
+							let pro = [];    //월별영업이익
+							console.log('cToken',cToken);
+							$.ajax({
+								url:'/chart/chajax/',
+								type:'post',
+								headers:{'X-CSRFToken':cToken},
+								data:{'test':'aaa'},
+								success:function(data){
+									alert('성공');
+									console.log('넘어온데이터 : ',data);
+									for(let i=0;i<data.ajaxlist.length;i++){
+										// 자바스크립트에서 배열에 데이터 추가명령어:push
+										tSales.push(data.ajaxlist[i].totalSales);
+										mon.push(data.ajaxlist[i].monthly);
+										pro.push(data.ajaxlist[i].profit);
+									}
+									console.log('월별매출액 : ',tSales);
+									console.log('월별이름 : ',mon);
+									console.log('월별영업이익 : ',pro);
+
+
+									//차트그리기
+									
+
+
+
+								},
+								error:function(){
+									alert('실패');
+								}
+							});//ajax선언
 							const ctx = document.getElementById('myChart');
-							console.log('영업이익 : ','{{profit}}');
-							console.log('qs : ','{{list}}');
-							console.log('qs.values : ','{{list_list}}');
+							console.log('영업이익 : ',{{profit}});
+
 							new Chart(ctx, {
 								type: 'bar',
 								data: {
