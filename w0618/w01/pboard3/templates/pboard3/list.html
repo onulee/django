@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 	<!-- container -->
 	<div id="container">
@@ -55,7 +56,7 @@
 										<a href="/pboard2/view/{{d.movieCd}}/">{{d.movieNm}}</a>
 									</td>
 									<td>{{d.openDt}}</td>
-									<td class="tnone right">{{d.audiAcc}}</td>
+									<td class="tnone right">{{d.audiAcc|intcomma}}</td>
 								</tr>
 								{% endfor %}
 
