@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 import requests
 import json
@@ -47,12 +47,19 @@ def oauth(request):
     user_info = requests.get(kakao_profile_url,headers=auth_headers)
     # json타입으로 변경
     user_info_json = user_info.json()
-    print('개인정보 : ',user_info_json)
+    print('전체응답정보 : ',user_info_json)
+    print('회원번호 : ',user_info_json.get('id'))
+    kakao_account = user_info_json.get('kakao_account')
+    kakao_profile = kakao_account.get('profile')
+    kakao_nickname = kakao_profile.get('nickname')
+    kakao_thumbnail_image_url = kakao_profile.get('thumbnail_image_url')
+    kakao_profile_image_url = kakao_profile.get('profile_image_url')
+    print('카카오계정 전체정보 : ',kakao_account)
+    print('카카오계정 프로필 정보 : ',kakao_profile)
+    print('카카오계정 닉네임 : ',kakao_nickname)
+    print('프로필 미리보기 이미지 URL : ',kakao_thumbnail_image_url)
+    print('프로필 사진 URL : ',kakao_profile_image_url)
     
-    # 코드값 출력
-    print('code : ',code)
-    
-    # 토큰값 출력
-    print('token json : ',token_json)
-    
-    return HttpResponse(f'code : {code}, token json:{token_json}')
+    # request.session.session_id = user_info_json.get('id')
+    # return redirect('/')
+    return HttpResponse(f'code : {code}, token json:{token_json}<br>닉네임:{kakao_nickname},<br>프로필 사진:{kakao_thumbnail_image_url}')
