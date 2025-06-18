@@ -8,4 +8,5 @@ urlpatterns = [
     path('chart/', include('chart.urls')),
     path('pboard/', include('pboard.urls')),
     path('pboard2/', include('pboard2.urls')),
+    path('pboard3/', include('pboard3.urls')),
 ]

@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'chart',
     'pboard',
     'pboard2',
+    'pboard3',
 ]
 
 MIDDLEWARE = [
