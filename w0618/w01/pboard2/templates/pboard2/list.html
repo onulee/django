@@ -41,18 +41,22 @@
 							<thead>
 								<th scope="col" class="tnone">NO.</th>
 								<th scope="col">제목</th>
+								<th scope="col">촬영자</th>
 								<th scope="col">등록일</th>
-								<th scope="col" class="tnone">조회수</th>
+								<th scope="col" class="tnone">키워드</th>
 							</thead>
 							<tbody>
+								{% for d in list %}
 								<tr>
-									<td class="tnone">1</td>
+									<td class="tnone">{{d.galContentId}}</td>
 									<td class="left">
-										<a href="#">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
+										<a href="#">{{d.galTitle}}</a>
 									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
+									<td>{{d.galPhotographer}}</td>
+									<td>{{d.galPhotographyMonth}}</td>
+									<td class="tnone right">{{d.galSearchKeyword}}</td>
 								</tr>
+								{% endfor %}
 
 							</tbody>
 						</table>

@@ -11,13 +11,14 @@ def list(request):
     # 공공데이터 가져오기에 필요한 정보
     pageNo = 1
     serviceKey = '918RE13GA7OY7ZEmUzApgbOeAcQoZ%2FaHsXWcqPAKQ9YNNPj83KOstRMRIUrCFIAcm9qj2R6b7NFZjp%2FYsYzJLg%3D%3D'
-    url = f'https://apis.data.go.kr/B551011/PhotoGalleryService1/galleryList1?serviceKey={serviceKey}&numOfRows=10&pageNo={pageNo}&MobileOS=ETC&MobileApp=AppTest&arrange=A&_type=json'
+    url = f'http://apis.data.go.kr/B551011/PhotoGalleryService1/galleryList1?serviceKey={serviceKey}&numOfRows=10&pageNo={pageNo}&MobileOS=ETC&MobileApp=AppTest&arrange=A&_type=json'
     
     # 공공데이터 가져오기
     response = requests.get(url)          # 공공데이터 가져온 타입 : str타입
-    json_data = json.load(response.text)  # json타입으로 변경 -> dict타입
+    json_data = json.loads(response.text)  # json타입으로 변경 -> dict타입
+    # 필요한 데이터, 리스트로 변경해서 전달
+    dlist = json_data['response']['body']['items']['item']
+    print("10개 : ",dlist)
     
-    a = {'id':'aaa','pw':1111}
-    print(a['id'])
-    
-    return render(request,'pboard2/list.html')
+    context = {'list':dlist}
+    return render(request,'pboard2/list.html',context)
