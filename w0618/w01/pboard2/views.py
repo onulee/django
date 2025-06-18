@@ -5,6 +5,19 @@ import json
 ### 전역변수
 dlist = []  # list함수에서 공공데이터를 가지고 와서 view함수에 전달
 
+## 공공데이터 상세보기
+def view(request,galContentId):
+    global dlist
+    print('넘어온 galContentId : ',galContentId)
+    context = {}
+    for d in dlist:
+        if d['galContentId'] == str(galContentId):
+            context['dData'] = d
+            
+    print(context['dData'])
+    return render(request,'pboard2/view.html',context)
+
+
 # 공공데이터 리스트
 def list(request):
     global dlist #전역변수 사용
