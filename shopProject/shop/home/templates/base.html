@@ -31,7 +31,9 @@
 	<div id="header">
 		
 		<div id="snbBox">
-			<h1><img src="/static/images/txt/logo.gif" alt="JARDIN SHOP" /></h1>
+			<a href='/'>
+				<h1><img src="/static/images/txt/logo.gif" alt="JARDIN SHOP" /></h1>
+			</a>
 			<div id="quickmenu">
 				<div id="mnaviOpen"><img src="/static/images/btn/btn_mnavi.gif" width="33" height="31" alt="메뉴열기" /></div>
 				<div id="mnaviClose"><img src="/static/images/btn/btn_mnavi_close.gif" width="44" height="43" alt="메뉴닫기" /></div>
@@ -44,9 +46,10 @@
 			<div id="snb">
 				<ul>
 					<li><a href="{% url 'member:login' %}">LOGIN</a></li>
-					<li><a href="#">JOIN</a></li>
+					<li><a href="{% url 'member:step01' %}">JOIN</a></li>
 					<li><a href="#">MY PAGE</a></li>
 					<li><a href="#">CART</a></li>
+					<li><a href="/admin/">ADMIN</a></li>
 				</ul>
 
 				<div id="search">
