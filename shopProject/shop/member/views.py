@@ -6,7 +6,7 @@ import numpy as np
 
 ### 전역변수
 random_txt = ''
-
+c_chk = 0   # 랜덤비밀번호 확인여부
 
 # get:로그인페이지, post:로그인확인
 def login(request):
@@ -46,6 +46,13 @@ def logout(request):
     context = {'msg':msg}
     return render(request,'member/login.html',context)
 
+# 회원가입02
+def step02(request):
+    if c_chk != 1:
+        return redirect('/')
+    else:
+        return render(request,'member/step02.html')
+
 # 회원가입01
 def step01(request):
     return render(request,'member/step01.html')
@@ -76,11 +83,12 @@ def randomNumber():
 
 # 이메일 랜덤번호 확인
 def confirmChk(request):
+    global c_chk
     confirmTxt = request.POST.get('confirmTxt')
     print('confirmTxt : ',confirmTxt)
-    
     if random_txt == confirmTxt:
         msg = 'success'
+        c_chk = 1
     else:
         msg = 'fail'    
     
