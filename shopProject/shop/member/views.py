@@ -55,6 +55,7 @@ def emailSend(request):
     email = request.POST.get('email')
     # 알파벳 26개, 숫자 10개 : 36개  0-35
     txt = 'abcdefghijklmnopqrstuvwxyz0123456789'
+    random_array = [] # 초기화
     random_array = np.random.randint(0, 35, 10)
     print('넘어온 email : ',email)
     print('랜덤 rno : ',random_array)
@@ -67,3 +68,14 @@ def emailSend(request):
     ######################     
     context = {'msg':'success','random_txt':random_txt}
     return JsonResponse(context)
+
+
+# 이메일 랜덤번호 확인
+def confirmChk(request):
+    confirmTxt = request.POST.get('confirmTxt')
+    if random_txt == confirmTxt:
+        msg = 'success'
+    else:
+        msg = 'fail'    
+    context = {'msg':msg,'random_txt':random_txt}
+    return JsonResponse(context) 

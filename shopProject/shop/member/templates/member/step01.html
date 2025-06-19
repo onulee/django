@@ -76,10 +76,12 @@
 							<script>
 								//전역변수
 								let emailChk = 0;
+								let cToken = $('meta[name="csrf-token"]').attr('content');
+								
 								function emailBtn(){
 									alert('이메일을 발송합니다.');
 									let email = $('input[name="email"]').val()
-									let cToken = $('meta[name="csrf-token"]').attr('content');
+									
 									console.log('email : ',email);
 									console.log('cToken : ',cToken);
 									// url,type,headers,data,success,error
@@ -111,7 +113,22 @@
 									console.log('confirmTxt : ',confirmTxt);
 									// url,type,headers,data,success,error
 									$.ajax({
-										
+										url:'/member/confirmChk/',
+										type:'post',
+										headers:{'X-CSRFToken':cToken},
+										data:{'confirmTxt':confirmTxt},
+										success:function(data){
+											//alert('성공');
+											console.log('data : ',data);
+											if(data.msg == 'success'){
+												alert('랜덤전송번호와 일치합니다.')
+											}else{
+												alert('랜덤전송번호와 일치하지 않습니다. 다시 입력하세요.')
+											}
+										},
+										error:function(){
+											alert('실패');
+										}
 
 									});//ajax
 
