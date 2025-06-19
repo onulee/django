@@ -53,22 +53,28 @@ def step01(request):
 # 이메일발송
 def emailSend(request):
     email = request.POST.get('email')
-    # 알파벳 26개, 숫자 10개 : 36개  0-35
-    txt = 'abcdefghijklmnopqrstuvwxyz0123456789'
-    random_array = [] # 초기화
-    random_array = np.random.randint(0, 35, 10)
     print('넘어온 email : ',email)
-    print('랜덤 rno : ',random_array)
-    global random_txt
-    for i in random_array:
-         random_txt += txt[i]
-         
+    # 랜덤번호 생성
+    random_txt = randomNumber()
+    print('random_txt : ',random_txt)
     ### 이메일 발송 부분 추가
     
     ######################     
     context = {'msg':'success','random_txt':random_txt}
     return JsonResponse(context)
 
+### 랜덤번호 생성
+def randomNumber():
+    # 알파벳 26개, 숫자 10개 : 36개  0-35
+    txt = 'abcdefghijklmnopqrstuvwxyz0123456789'
+    random_array = [] # 초기화
+    random_array = np.random.randint(0, 35, 10)
+    print('랜덤 rno : ',random_array)
+    global random_txt
+    for i in random_array:
+         random_txt += txt[i]
+    
+    return random_txt
 
 # 이메일 랜덤번호 확인
 def confirmChk(request):

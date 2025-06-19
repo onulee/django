@@ -77,13 +77,13 @@
 								//전역변수
 								let emailChk = 0;
 								let cToken = $('meta[name="csrf-token"]').attr('content');
-								
+
+								// 이메일발송 함수
 								function emailBtn(){
 									alert('이메일을 발송합니다.');
-									let email = $('input[name="email"]').val()
-									
+									email = $('input[name="email"]').val();
 									console.log('email : ',email);
-									console.log('cToken : ',cToken);
+									//email정보 -> 디장고 보냄
 									// url,type,headers,data,success,error
 									$.ajax({
 										url:'/member/emailSend/',
@@ -91,14 +91,16 @@
 										headers:{'X-CSRFToken':cToken},
 										data:{'email':email},
 										success:function(data){
-											alert('성공');
-											console.log('data : ',data)
-											emailChk = 1;
+											//alert('성공');
+											console.log('data : ',data);
+											
 										},
 										error:function(){
 											alert('실패');
 										}
-									});//ajax
+
+									});
+									
 								}//emailBtn
 
 								function confirmBtn(){
