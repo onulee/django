@@ -103,17 +103,12 @@
 									
 								}//emailBtn
 
+								//랜덤번호 확인
 								function confirmBtn(){
-									/*
-									if (emailChk != 1){
-										alert('이메일 전송을 하셔야 확인이 가능합니다.');
-										$('input[name="email"]').focus();
-										return;
-									}
-									*/
-									let confirmTxt = $('input[name="confirmTxt"]').val()
+									alert('확인')
+									confirmTxt = $('input[name="confirmTxt"]').val()
 									console.log('confirmTxt : ',confirmTxt);
-									// url,type,headers,data,success,error
+									//전송번호 -> 디장고 전송
 									$.ajax({
 										url:'/member/confirmChk/',
 										type:'post',
@@ -122,11 +117,7 @@
 										success:function(data){
 											//alert('성공');
 											console.log('data : ',data);
-											if(data.msg == 'success'){
-												alert('랜덤전송번호와 일치합니다.')
-											}else{
-												alert('랜덤전송번호와 일치하지 않습니다. 다시 입력하세요.')
-											}
+											
 										},
 										error:function(){
 											alert('실패');
@@ -134,7 +125,11 @@
 
 									});//ajax
 
-								}//
+								}//confirmBtn
+
+								function nextBtn(){
+									alert('다음으로');
+								}
 							</script>
 							<tbody>
 								<tr>
@@ -161,7 +156,7 @@
 
 					<!-- Btn Area -->
 					<div class="btnAreaCenter">
-						<a href="/member/step02/" class="gbtn">이메일인증</a></li>
+						<a onclick='nextBtn()' class="gbtn">다음으로</a></li>
 					</div>
 					<!-- //Btn Area -->
 

@@ -54,13 +54,11 @@ def step01(request):
 def emailSend(request):
     email = request.POST.get('email')
     print('넘어온 email : ',email)
-    # 랜덤번호 생성
-    random_txt = randomNumber()
-    print('random_txt : ',random_txt)
+    
     ### 이메일 발송 부분 추가
     
     ######################     
-    context = {'msg':'success','random_txt':random_txt}
+    context = {'msg':'success','random_txt':randomNumber()}
     return JsonResponse(context)
 
 ### 랜덤번호 생성
@@ -79,9 +77,12 @@ def randomNumber():
 # 이메일 랜덤번호 확인
 def confirmChk(request):
     confirmTxt = request.POST.get('confirmTxt')
+    print('confirmTxt : ',confirmTxt)
+    
     if random_txt == confirmTxt:
         msg = 'success'
     else:
         msg = 'fail'    
-    context = {'msg':msg,'random_txt':random_txt}
+    
+    context = {'msg':msg}
     return JsonResponse(context) 
