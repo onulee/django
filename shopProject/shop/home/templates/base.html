@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="/static/css/reset.css?v=Y" />
 <link rel="stylesheet" type="text/css" href="/static/css/layout.css?v=Y" />
 <link rel="stylesheet" type="text/css" href="/static/css/content.css?v=Y" />
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="/static/js/top_navi.js"></script>
 <script type="text/javascript" src="/static/js/left_navi.js"></script>
 <script type="text/javascript" src="/static/js/main.js"></script>
@@ -45,8 +45,13 @@
 			</div>
 			<div id="snb">
 				<ul>
+					{% if not request.session.session_id %}
 					<li><a href="{% url 'member:login' %}">LOGIN</a></li>
 					<li><a href="{% url 'member:step01' %}">JOIN</a></li>
+					{% else %}
+					<li><a href="{% url 'member:logout' %}">LOGOUT</a></li>
+					<li><a>{{request.session.session_name}}님</a></li>
+					{% endif %}
 					<li><a href="#">MY PAGE</a></li>
 					<li><a href="#">CART</a></li>
 					<li><a href="/admin/">ADMIN</a></li>
