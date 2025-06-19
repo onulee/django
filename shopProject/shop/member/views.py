@@ -1,6 +1,12 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from member.models import Member
+import random
+import numpy as np
+
+### 전역변수
+random_txt = ''
+
 
 # get:로그인페이지, post:로그인확인
 def login(request):
@@ -47,6 +53,17 @@ def step01(request):
 # 이메일발송
 def emailSend(request):
     email = request.POST.get('email')
+    # 알파벳 26개, 숫자 10개 : 36개  0-35
+    txt = 'abcdefghijklmnopqrstuvwxyz0123456789'
+    random_array = np.random.randint(0, 35, 10)
     print('넘어온 email : ',email)
-    context = {'msg':'success'}
+    print('랜덤 rno : ',random_array)
+    global random_txt
+    for i in random_array:
+         random_txt += txt[i]
+         
+    ### 이메일 발송 부분 추가
+    
+    ######################     
+    context = {'msg':'success','random_txt':random_txt}
     return JsonResponse(context)

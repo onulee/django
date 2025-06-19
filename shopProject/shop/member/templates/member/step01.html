@@ -74,6 +74,8 @@
 							<col width="*" />
 							</colgroup>
 							<script>
+								//전역변수
+								let emailChk = 0;
 								function emailBtn(){
 									alert('이메일을 발송합니다.');
 									let email = $('input[name="email"]').val()
@@ -89,13 +91,31 @@
 										success:function(data){
 											alert('성공');
 											console.log('data : ',data)
+											emailChk = 1;
 										},
 										error:function(){
 											alert('실패');
 										}
+									});//ajax
+								}//emailBtn
+
+								function confirmBtn(){
+									/*
+									if (emailChk != 1){
+										alert('이메일 전송을 하셔야 확인이 가능합니다.');
+										$('input[name="email"]').focus();
+										return;
+									}
+									*/
+									let confirmTxt = $('input[name="confirmTxt"]').val()
+									console.log('confirmTxt : ',confirmTxt);
+									// url,type,headers,data,success,error
+									$.ajax({
+										
 
 									});//ajax
-								}
+
+								}//
 							</script>
 							<tbody>
 								<tr>
@@ -111,8 +131,8 @@
 									<th scope="row"><span>전송번호 입력</span></th>
 									<td>
 										<ul class="pta">
-											<li class="or10"><input type="text" class="w186" disabled /></li>
-											<li><a href="#" class="nbtnMini iw56">확인</a></li>
+											<li class="or10"><input type="text" class="w186" name='confirmTxt' /></li>
+											<li><a onclick='confirmBtn()' class="nbtnMini iw56">확인</a></li>
 										</ul>
 									</td>
 								</tr>
