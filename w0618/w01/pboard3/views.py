@@ -28,6 +28,13 @@ def searchAjax(request):
 
 # 공공데이터 리스트
 def list(request):
+    # 공통영역 : 영화데이터 호출
+    context = publicScreen('20250617')
+    return render(request,'pboard3/list.html',context)
+
+
+## 공통영역 : 영화데이터 가져오기 함수
+def publicScreen(targetDt):
     global dlist #전역변수 사용
     # 공공데이터 가져오기에 필요한 정보
     key = 'b4cefdc91025f56609b0e03df7a460a0'
@@ -41,5 +48,4 @@ def list(request):
     print("10개 : ",dlist)
     
     context = {'list':dlist}
-    return render(request,'pboard3/list.html',context)
-
+    return context

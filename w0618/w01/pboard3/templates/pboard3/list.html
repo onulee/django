@@ -111,7 +111,7 @@
 
 												let hdata = ``;
 
-												for(var i=0;i<10;i++){
+												for(var i=0;i<data.list.length;i++){
 													hdata += `<tr>
 														<td class="tnone">${data.list[i].rank}</td>
 														<td>${data.list[i].rankInten}</td>
@@ -124,8 +124,6 @@
 												}
 
 												$('tbody').html(hdata);
-
-
 											},
 											error:function(){
 												alert('실패');
