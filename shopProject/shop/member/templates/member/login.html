@@ -58,7 +58,7 @@
 							<form action='{% url "member:login" %}' method='post' name='loginFrm'>
 								{% csrf_token %}
 								<ul>
-									<li><input type="text" name='id' class="loginType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" value='{{cook_id}}' /></li>
+									<li><input type="text" name='id' class="loginType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" value='{{cook_id}}' {% if cook_id %} autofocus {% endif %}  /></li>
 									<li><input type="password" name='pw' class="passType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='passType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
 								</ul>
 

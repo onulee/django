@@ -70,16 +70,40 @@
 						<table summary="실명확인 조회" class="checkTable" border="1" cellspacing="0">
 							<caption>실명확인 조회</caption>
 							<colgroup>
-							<col width="22%" class="tw30" />
+							<col width="27%" class="tw30" />
 							<col width="*" />
 							</colgroup>
+							<script>
+								function emailBtn(){
+									alert('이메일을 발송합니다.');
+									let email = $('input[name="email"]').val()
+									let cToken = $('meta[name="csrf-token"]').attr('content');
+									console.log('email : ',email);
+									console.log('cToken : ',cToken);
+									// url,type,headers,data,success,error
+									$.ajax({
+										url:'/member/emailSend/',
+										type:'post',
+										headers:{'X-CSRFToken':cToken},
+										data:{'email':email},
+										success:function(data){
+											alert('성공');
+											console.log('data : ',data)
+										},
+										error:function(){
+											alert('실패');
+										}
+
+									});//ajax
+								}
+							</script>
 							<tbody>
 								<tr>
 									<th scope="row"><span>이메일주소 입력</span></th>
 									<td>
 										<ul class="pta">
-											<li class="or10"><input type="text" class="w186" /></li>
-											<li><a href="#" class="nbtnMini iw56">전송</a></li>
+											<li class="or10"><input type="text" class="w186" name='email' /></li>
+											<li><a onclick='emailBtn()' class="nbtnMini iw56">전송</a></li>
 										</ul>
 									</td>
 								</tr>

@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.http import JsonResponse
 from member.models import Member
 
 # get:로그인페이지, post:로그인확인
@@ -42,3 +43,10 @@ def logout(request):
 # 회원가입01
 def step01(request):
     return render(request,'member/step01.html')
+
+# 이메일발송
+def emailSend(request):
+    email = request.POST.get('email')
+    print('넘어온 email : ',email)
+    context = {'msg':'success'}
+    return JsonResponse(context)
