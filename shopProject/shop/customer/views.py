@@ -4,9 +4,10 @@ from customer.models import Customer
 from member.models import Member
 
 # 게시글 상세보기
-def view(request):
-    context = {'list':''}
-    return render(request,'customer/list.html',context)
+def view(request,bno):
+    qs = Customer.objects.get(bno=bno)
+    context = {'customer':qs}
+    return render(request,'customer/view.html',context)
 
 # 게시글 쓰기 - get:글쓰기페이지, post:글쓰기저장
 def write(request):
@@ -14,7 +15,8 @@ def write(request):
         return render(request,'customer/write.html')
     elif request.method == 'POST':
         btitle = request.POST.get('btitle')
-        id = request.POST.get('id')
+        ## session 서버 
+        id = request.session['session_id']
         member = Member.objects.get(id=id)
         bcontent = request.POST.get('bcontent')
         bfile = request.FILES.get('bfile','')

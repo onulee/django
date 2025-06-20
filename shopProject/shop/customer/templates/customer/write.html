@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 	{% block content %}
+	{% if not request.session.session_id %}
+		<script>
+			alert('로그인이 되어야 글쓰기가 가능합니다.');
+			location.href='/member/login/';
+		</script>
+	{% endif %}
 	<script>
 		if('{{msg}}' == '1'){
 			alert('글쓰기가 저장되었습니다.');
@@ -52,7 +58,7 @@
 									<tr>
 										<th scope="row"><span>작성자</span></th>
 										<td>
-											<input type="text" name='id' class="wlong" />
+											{{request.session.session_id}}
 										</td>
 									</tr>
 									<tr>
