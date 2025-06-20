@@ -31,10 +31,36 @@ def delete(request,bno):
 # 게시글 상세보기 
 # 쿠키 저장형태 : cookie_bhit:aaa  101|102|97|90
 def view(request,bno):
-  # 조회수 1증가 - filter : update()
+  # db연결
   qs = Customer.objects.filter(bno=bno)
   context = {'customer':qs[0]}
   response = render(request,'customer/view.html',context)
+  
+  
+  # 쿠키이름 지정 - cookie_bhit:aaa, cookie_bhit:bbb, cookie_bhit:아이디
+  cookie_name = f'cookie_bhit:{request.session["session_id"]}'
+  
+  # 쿠키시간설정 - 1일기준
+  #   tomorrow = datetime.datetime.now()  # 현재시간
+  # 해당일의 마지막 시간으로 설정
+  tomorrow = datetime.datetime.replace(datetime.datetime.now(),
+                                       hour=23,minute=59,second=59)
+  # 쿠키시간으로 설정형태 변경
+  expires = datetime.datetime.strftime(tomorrow,"%a, %d-%b-%Y %H:%M:%S GMT")
+  
+  if request.COOKIES.get(cookie_name) is not None:
+      cookies = request.COOKIES.get(cookie_name) #쿠키가져오기
+      print('쿠키 : ',cookies)
+      cookies_list = cookies.split('|')  # 101|20|100|97 -> [101,20,100,97]
+      # 비교타입 - str타입   cookie_bhit:aaa    103|101
+      if str(bno) not in cookies_list:
+          response.set_cookie(cookie_name,cookies+f'|{bno}',expires=expires)
+          qs.update(bhit=F('bhit')+1) # 조회수1증가
+      
+  else:
+      #  쿠키이름 : cookie_bhit:aaa
+      response.set_cookie(cookie_name,bno,expires=expires)
+      qs.update(bhit = F('bhit')+1)   # qs.bhit += 1
   
   return response
         
