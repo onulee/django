@@ -2,12 +2,43 @@ from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from customer.models import Customer
 from member.models import Member
+import datetime
+from django.db.models import F
 
-# 게시글 상세보기
-def view(request,bno):
-    qs = Customer.objects.get(bno=bno)
-    context = {'customer':qs}
+
+# 게시글 수정 get:수정페이지, post:수정저장
+def update(request,bno):
+    if request.method == 'GET':
+        context = {}
+        return render(request,'customer/update.html',context)
+    elif request.method == 'POST':
+        context = {}
+        return render(request,'customer/update.html',context)
+        
+
+
+# 게시글 삭제
+def delete(request,bno):
+    if request.session['session_id']:
+        Customer.objects.get(bno=bno).delete()
+        context = {'msg':-1}
+    else:
+        context = {'msg':-2}    
     return render(request,'customer/view.html',context)
+    # return redirect('/customer/list/')
+
+
+# 게시글 상세보기 
+# 쿠키 저장형태 : cookie_bhit:aaa  101|102|97|90
+def view(request,bno):
+  # 조회수 1증가 - filter : update()
+  qs = Customer.objects.filter(bno=bno)
+  context = {'customer':qs[0]}
+  response = render(request,'customer/view.html',context)
+  
+  return response
+        
+   
 
 # 게시글 쓰기 - get:글쓰기페이지, post:글쓰기저장
 def write(request):

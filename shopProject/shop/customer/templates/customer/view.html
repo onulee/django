@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 	{% block content %}
+	<script>
+		if('{{msg}}' == '-1'){
+			alert('게시글이 삭제되었습니다.');
+			location.href='/customer/list/';
+		}
+		else if('{{msg}}'=='-2'){
+			alert('삭제경로가 잘못되었습니다. 다시 확인하세요.');
+		}
+	</script>
 	<!-- container -->
 	<div id="container">
 
@@ -42,11 +51,24 @@
 							<div class="day">
 								<p class="txt">작성자<span>{{customer.member.name}}</span></p>
 							</div>
+							<div class="day">
+								<p class="txt">조회수<span>{{customer.bhit}}</span></p>
+							</div>
 						</div>
 
 						<div class="viewContents">
 							{{customer.bcontent}}<br/>
 						</div>
+						{% if customer.bfile %}
+						<div class="viewContents">
+							<img src='/media/{{customer.bfile}}/' style='width:50%;'>
+						</div>
+						{% endif %}
+						{% if customer.bfile2 %}
+						<div class="viewContents">
+							<img src='/media/{{customer.bfile2}}/' style='width:50%;'>
+						</div>
+						{% endif %}
 					</div>
 
 
@@ -73,12 +95,62 @@
 					</div>
 					<!-- //이전다음글 -->
 
+					<!-- 댓글-->
+					<div class="replyWrite">
+						<ul>
+							<li class="in">
+								<p class="txt">총 <span class="orange">3</span> 개의 댓글이 달려있습니다.</p>
+								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" class="replynum" /></p>
+								<textarea class="replyType"></textarea>
+							</li>
+							<li class="btn"><a href="#" class="replyBtn">등록</a></li>
+						</ul>
+						<p class="ntic">※ 비밀번호를 입력하시면 댓글이 비밀글로 등록 됩니다.</p>
+					</div>
 
+					<div class="replyBox">
+						<ul>
+							<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
+							<li class="txt"><textarea class="replyType"></textarea></li>
+							<li class="btn">
+								<a href="#" class="rebtn">수정</a>
+								<a href="#" class="rebtn">삭제</a>
+							</li>
+						</ul>
+
+						<ul>
+							<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
+							<li class="txt">대박!!! 이거 저한테 완전 필요한 이벤트였어요!!</li>
+							<li class="btn">
+								<a href="#" class="rebtn">수정</a>
+								<a href="#" class="rebtn">삭제</a>
+							</li>
+						</ul>
+
+						<ul>
+							<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
+							<li class="txt">
+								<a href="password.html" class="passwordBtn"><span class="orange">※ 비밀글입니다.</span></a>
+							</li>
+						</ul>
+					</div>
+					<!-- //댓글 -->
+					<script>
+						function deleteBtn(){
+							if(confirm({{customer.bno}}+'번 게시글을 삭제하시겠습니까?')){
+								location.href='/customer/delete/{{customer.bno}}/';
+							}
+						}
+					</script>
 					<!-- Btn Area -->
 					<div class="btnArea btline">
 						<div class="bRight">
 							<ul>
-								<li><a href="#" class="sbtnMini mw">목록</a></li>
+								{% if customer.member.id == request.session.session_id %}
+								<li><a href="/customer/update/{{customer.bno}}/" class="nbtnbig mw">수정</a></li>
+								<li><a onclick='deleteBtn()' class="nbtnbig mw">삭제</a></li>
+								{% endif %}
+								<li><a href="/customer/list/?page=1" class="sbtnMini mw">목록</a></li>
 							</ul>
 						</div>
 					</div>
