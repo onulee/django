@@ -9,7 +9,8 @@ from django.db.models import F
 # 게시글 수정 get:수정페이지, post:수정저장
 def update(request,bno):
     if request.method == 'GET':
-        context = {}
+        qs = Customer.objects.get(bno=bno)
+        context = {'customer':qs}
         return render(request,'customer/update.html',context)
     elif request.method == 'POST':
         context = {}
