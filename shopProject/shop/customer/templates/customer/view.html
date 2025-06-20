@@ -94,7 +94,17 @@
 						</table>
 					</div>
 					<!-- //이전다음글 -->
+					<script>
+						function updateBtn(){
+							alert('수정페이지로 이동합니다.');
+							console.log($(this).closet('ul'));
+						}//updateBtn
 
+						function deleteBtn(){
+							alert('삭제를 진행합니다.');
+							console.log($(this))
+						}
+					</script>
 					<!-- 댓글-->
 					<div class="replyWrite">
 						<ul>
@@ -109,30 +119,37 @@
 					</div>
 
 					<div class="replyBox">
-						<ul>
-							<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
-							<li class="txt"><textarea class="replyType"></textarea></li>
+						{% for comment in clist %}
+						<ul id='{{comment.cno}}'>
+							<li class="name">{{comment.member.id}} <span>[{{comment.cdate|date:'Y-m-d H:i:s'}}]</span></li>
+							<li class="txt">{{comment.ccontent}}</li>
 							<li class="btn">
-								<a href="#" class="rebtn">수정</a>
-								<a href="#" class="rebtn">삭제</a>
+								<a onclick="updateBtn()" class="rebtn">수정</a>
+								<a onclick='deleteBtn()' class="rebtn">삭제</a>
 							</li>
 						</ul>
+						{% endfor %}
 
-						<ul>
-							<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
-							<li class="txt">대박!!! 이거 저한테 완전 필요한 이벤트였어요!!</li>
-							<li class="btn">
-								<a href="#" class="rebtn">수정</a>
-								<a href="#" class="rebtn">삭제</a>
-							</li>
-						</ul>
+						<!-- 비밀글
+							<ul>
+								<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
+								<li class="txt">
+									<a href="password.html" class="passwordBtn"><span class="orange">※ 비밀글입니다.</span></a>
+								</li>
+							</ul>
+						-->
+						<!-- 수정입력창
+							<ul>
+								<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
+								<li class="txt"><textarea class="replyType"></textarea></li>
+								<li class="btn">
+									<a href="#" class="rebtn">저장</a>
+									<a href="#" class="rebtn">취소</a>
+								</li>
+							</ul>
+						-->
 
-						<ul>
-							<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
-							<li class="txt">
-								<a href="password.html" class="passwordBtn"><span class="orange">※ 비밀글입니다.</span></a>
-							</li>
-						</ul>
+
 					</div>
 					<!-- //댓글 -->
 					<script>

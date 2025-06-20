@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from customer.models import Customer
 from member.models import Member
+from comment.models import Comment
 import datetime
 from django.db.models import F
 
@@ -50,7 +51,9 @@ def delete(request,bno):
 def view(request,bno):
   # db연결
   qs = Customer.objects.filter(bno=bno)
-  context = {'customer':qs[0]}
+  # comment db연결
+  c_qs = Comment.objects.filter(customer=qs[0])
+  context = {'customer':qs[0],'clist':c_qs}
   response = render(request,'customer/view.html',context)
   
   
