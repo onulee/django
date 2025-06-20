@@ -17,12 +17,8 @@ def update(request,bno):
         # db가져오기
         qs = Customer.objects.get(bno=bno)
         # 넘어온 데이터
-        btitle = request.POST.get('btitle')
-        bcontent = request.POST.get('bcontent')
-        oldfile = request.POST.get('oldfile')
-        oldfile2 = request.POST.get('oldfile2')
-        qs.btitle = btitle
-        qs.bcontent = bcontent
+        qs.btitle = request.POST.get('btitle')
+        qs.bcontent = request.POST.get('bcontent')
         
         # 이미지 파일첨부가 있으면
         if request.FILES.get('bfile'):
@@ -33,7 +29,7 @@ def update(request,bno):
             qs.bfile2 = request.FILES.get('bfile2')
         
         qs.save()     
-        context = {'msg':1}
+        context = {'msg':1,'bno':bno}
         return render(request,'customer/update.html',context)
         
 
