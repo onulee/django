@@ -9,8 +9,8 @@
 	{% endif %}
 	<script>
 		if('{{msg}}' == '1'){
-			alert('글쓰기가 저장되었습니다.');
-			location.href='/customer/list/';
+			alert('게시글이 수정되었습니다.');
+			location.href='/customer/view/{{customer.bno}}/';
 		}
 	</script>
 	<!-- container -->
@@ -104,13 +104,13 @@
 					<script>
 						//글쓰기 취소
 						function cancelBtn(){
-							if(confirm('글쓰기를 취소하시겠습니까?')){
-								location.href='/customer/list/';
+							if(confirm('글쓰기를 수정하시겠습니까?')){
+								location.href='/customer/view/{{customer.bno}}/';
 							}
 						}//cancelBtn
 
 						function saveBtn(){
-							alert('글쓰기를 저장합니다.');
+							alert('게시글을 수정합니다.');
 							cFrm.submit();
 						}
 					</script>

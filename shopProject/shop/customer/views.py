@@ -12,8 +12,28 @@ def update(request,bno):
         qs = Customer.objects.get(bno=bno)
         context = {'customer':qs}
         return render(request,'customer/update.html',context)
+    
     elif request.method == 'POST':
-        context = {}
+        # db가져오기
+        qs = Customer.objects.get(bno=bno)
+        # 넘어온 데이터
+        btitle = request.POST.get('btitle')
+        bcontent = request.POST.get('bcontent')
+        oldfile = request.POST.get('oldfile')
+        oldfile2 = request.POST.get('oldfile2')
+        qs.btitle = btitle
+        qs.bcontent = bcontent
+        
+        # 이미지 파일첨부가 있으면
+        if request.FILES.get('bfile'):
+            qs.bfile = request.FILES.get('bfile')
+            
+        # 이미지 파일첨부2가 있으면
+        if request.FILES.get('bfile2'):
+            qs.bfile2 = request.FILES.get('bfile2')
+        
+        qs.save()     
+        context = {'msg':1}
         return render(request,'customer/update.html',context)
         
 
