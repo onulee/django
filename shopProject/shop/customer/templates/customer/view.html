@@ -95,21 +95,43 @@
 					</div>
 					<!-- //이전다음글 -->
 					<script>
-						function updateBtn(){
-							alert('수정페이지로 이동합니다.');
-							console.log($(this).closet('ul'));
-						}//updateBtn
+						$(function(){
+							let cToken = $('meta[name="csrf-token"]').attr('content');
+							$(document).on('click','.deleteBtn',function(){
+								let cno = $(this).closest('ul').attr('id');
+								if(confirm(cno+'번 댓글을 삭제하시겠습니까?')){
+									console.log(cno);
+									//url,type,headers,data,success,error
+									$.ajax({
+										url:'/comment/cdelete/',
+										type:'post',
+										headers:{'X-CSRFToken':cToken},
+										data:{'cno':cno},
+										success:function(data){
+											alert(cno+'번 하단댓글을 삭제했습니다.');
+											console.log(data);
+											//html 삭제
+											$('#'+cno).remove();
 
-						function deleteBtn(){
-							alert('삭제를 진행합니다.');
-							console.log($(this))
-						}
+											//댓글개수 감소
+											let clistCount = Number($('.clistCount').text());
+											clistCount -= 1;
+											$('.clistCount').text(clistCount);
+
+										},
+										error:function(){
+											alert('실패');
+										}
+									});//ajax
+								}
+							});//deleteBtn
+						});//jquery
 					</script>
 					<!-- 댓글-->
 					<div class="replyWrite">
 						<ul>
 							<li class="in">
-								<p class="txt">총 <span class="orange">3</span> 개의 댓글이 달려있습니다.</p>
+								<p class="txt">총 <span class="orange clistCount">{{clist.count}}</span> 개의 댓글이 달려있습니다.</p>
 								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" class="replynum" /></p>
 								<textarea class="replyType"></textarea>
 							</li>
@@ -124,8 +146,8 @@
 							<li class="name">{{comment.member.id}} <span>[{{comment.cdate|date:'Y-m-d H:i:s'}}]</span></li>
 							<li class="txt">{{comment.ccontent}}</li>
 							<li class="btn">
-								<a onclick="updateBtn()" class="rebtn">수정</a>
-								<a onclick='deleteBtn()' class="rebtn">삭제</a>
+								<a class="updateBtn rebtn">수정</a>
+								<a class="deleteBtn rebtn">삭제</a>
 							</li>
 						</ul>
 						{% endfor %}
