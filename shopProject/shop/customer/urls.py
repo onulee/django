@@ -7,3 +7,5 @@ urlpatterns = [
     path('view/<int:bno>/', views.view,name='view'),
     path('write/', views.write,name='write'),
 ]
+
+

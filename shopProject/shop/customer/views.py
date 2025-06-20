@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from customer.models import Customer
+from member.models import Member
 
 # 게시글 상세보기
 def view(request):
@@ -12,7 +13,21 @@ def write(request):
     if request.method == 'GET':
         return render(request,'customer/write.html')
     elif request.method == 'POST':
-        return render(request,'customer/write.html')
+        btitle = request.POST.get('btitle')
+        id = request.POST.get('id')
+        member = Member.objects.get(id=id)
+        bcontent = request.POST.get('bcontent')
+        bfile = request.FILES.get('bfile','')
+        bfile2 = request.FILES.get('bfile2','')
+        qs = Customer.objects.create(btitle=btitle,member=member,bcontent=bcontent,bfile=bfile,bfile2=bfile2)
+        qs.bgroup = qs.bno
+        qs.save()
+        print('------------------')
+        print(btitle,id,bcontent,bfile,bfile2)
+        print('------------------')
+        context = {'msg':1}
+        return render(request,'customer/write.html',context)
+        return render(request,'customer/write.html',context)
         
 
 # 게시판리스트
@@ -33,3 +48,4 @@ def list(request):
     # 게시글 10개, 현재페이지 보냄
     context = {'list':customerList,'page':page}
     return render(request,'customer/list.html',context)
+    # return redirect('/customer/list/')
