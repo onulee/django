@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+# 게시판리스트
+def list(request):
+    return render(request,'customer/list.html')
